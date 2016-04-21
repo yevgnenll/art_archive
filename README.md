@@ -112,3 +112,114 @@ i assume that all user doesn't know what we defined artists' id (artist_id attri
 because of word spacing i think if i develop this part i will use checkbox or dropdown <br>
 not be input artist name directly. developer should propose aritsts' name for user friendly
 
+#### 4. 가장 많은 images를 갖고있는 artist 찾아오기
+(답안: 빈센트 반 고흐)
+
+<pre>
+SELECT
+	count(*) as image_amount, art.name
+FROM
+	artists as art
+LEFT JOIN images AS img
+	on art.`id` = img.artist_id
+group by
+	art.name
+order by
+	image_amount desc
+limit 1
+</pre>
+
+최대의 갯수를 가지는 예술가가 1명이라고 가정한 경우의 쿼리입니다.<br>
+예술가의 이름으로 group을 정하고 count로 작품의 갯수를 파악했습니다.<br>
+그리고 그 갯수를 기준으로 내림차순 정렬하여 가장 높은 숫자 1개만 나오도록 만들었습니다.<br>
+이 경우엔 반드시 최대값만 결과로 나오게 됩니다.
+
+하지만 최대값이 중복되는 경우를 고려해야한다고 생각했습니다.
+
+this query is max image count is only one, at first<br>
+group by artists' name and i got each artists' amount of masterpieces using count() function<br>
+and i got max in descanding order base on each its the number of amount <br>
+in this case max amount must be displayed
+
+but i think we have to consider maximun can be duplicated
+
+<pre>
+select
+	art.*, img.*
+from
+	artists as art
+left join images as img
+	on art.id = img.artist_id
+left join 
+	(SELECT
+		count(*) as image_amount, i.artist_id as artist_id
+	FROM
+		artists as a
+	LEFT JOIN images AS i
+		on a.`id` = i.artist_id
+	group by
+		a.name
+	) as amount
+on amount.artist_id = art.id
+where
+	amount.image_amount = (SELECT
+					count(*) as image_amount
+				FROM
+					artists as art
+				LEFT JOIN images AS img
+					on art.`id` = img.artist_id
+				group by
+					art.name
+				order by
+					image_amount desc
+				limit 1
+				)
+group by
+	img.artist_id
+
+</pre>
+
+테이블을 artists, images를 outer join으로 사용했지만 서브쿼리를 하나의 테이블로 간주했습니다.
+이 테이블은 각 예술가가 몇 개의 작품이 있는지만 알려주는 테이블이고 가명을 amount로 정했습니다.
+3개의 테이블을 left join하고 그곳에서 가장 큰 수를 찾기위해 첫 번째 쿼리를 where문에 조건검색을 위해 사용했습니다
+
+그런데 images에서 불러오는 정보가 없고, 예술가의 이름을 서브쿼리에서 가져와야겠다고 생각했습니다.
+
+i used table 'artists', 'images' with outer join but i took subquery as a table
+this table let us know each artists' amount of materpiece and its alias is 'amount'
+after left joining 3 tables, i used first query in 'where' to find the largest number 
+
+but i'm not loading any information in images table, and artists' name can be found in subquery
+
+<pre>
+select 
+	amount.name
+from
+	(SELECT
+		count(*) as image_amount, i.artist_id as artist_id, a.name
+	FROM
+		artists as a
+	LEFT JOIN images AS i
+		on a.`id` = i.artist_id
+	group by
+		a.name
+	) as amount
+
+where
+	amount.image_amount = (SELECT
+					count(*) as image_amount
+				FROM
+					artists as art
+				LEFT JOIN images AS img
+					on art.`id` = img.artist_id
+				group by
+					art.name
+				order by
+					image_amount desc
+				limit 1
+				)
+</pre>
+
+이 쿼리를 최종 답안으로 제출합니다.
+
+now i submit this query as a final answer
