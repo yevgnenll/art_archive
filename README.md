@@ -9,6 +9,30 @@ this project is deal with famouse artists and their masterpiece data
 additional will be added
 
 ### 3. answer
+
+테이블 분석: artists
+
+| column name | attribute |
+| ------------- | ------------- |
+| id  | not null && auto increment  |
+| name  | artist name |
+| birth_year  |  artists' birth year  |
+| year  | created year  |
+| artist_id  | artists' id as Integer  |
+| description  | explain of masterpiece  |
+
+
+테이블 분석: images foreign key is artists_id from table artists
+
+| column name | attribute |
+| ------------- | ------------- |
+| id  | not null && auto increment  |
+| image_url  | 이미지 링크  |
+| title  | 작품제목  |
+| year  | 작품 생성된 연도  |
+| artist_id  | artists테이블의 FK  |
+| description  | 작품 특성(유채 etc.)  |
+
 #### 1. 쓰레기 셀카
 
 <pre>
@@ -22,9 +46,9 @@ WHERE
 	art.name="제니 오델";
 </pre>
 
-이 쿼리로 처음 확인을 하였고 refactoring은 아래와 같습니다.
+이 쿼리로 처음 확인을 하였고 답안은 아래와 같습니다.
 
-at first i searched for checking and refactored below
+for the first time confirmed, and answer is as follows
 
 <pre>
 SELECT
@@ -38,9 +62,11 @@ WHERE
 </pre>
 작품 제목만 찾는 쿼리입니다.
 
-search only masterpiece title
+this query is finding title of masterpiece
 
 ####2. 3개의 이미지
+
+answer:
 
 http://www.gulbenkian.pt/prjdir/gulbenkian/images/mediaRep/museu/colecao/pintura/Inv._2361Trat.jpg
 http://www.manet.org/images/gallery/the-luncheon-on-the-grass.jpg
@@ -48,7 +74,7 @@ http://mfas3.s3.amazonaws.com/objects/SC232880.jpg
 
 1번의 정답과 같이 처음엔 모든 데이터를 확인하기 위해 아래와 같이 만들었습니다
 
-i made below sql to check all of data such as problem no.1 at first
+i made query as follow to check all of data such as first problem 
 
 <pre>
 SELECT
@@ -63,8 +89,8 @@ WHERE
 
 결과는 7명의 예술가와 12개의 작품이 나왔습니다. 하지만 문제에서 별도의 기준이 없어 아래와 같이 작성하였습니다.
 
-results are 7 artists and 12 masterpieces but there isn't another criteria in problem 
-so i wrote like below
+results are 7 artists and 12 masterpieces but there isn't another criteria in question 
+so i wrote like as below
 
 <pre>
 SELECT
@@ -107,10 +133,10 @@ images 테이블의 id는 AUTO_INCREMENT 속성을 갖고있기 때문에 별도
 (만약 이 부분을 제가 개발된다면 예술가의 이름은 띄어쓰기를 고려하여 checkbox나 drop down을 사용하여 직접 입력받는게 아니라
 개발자가 제안하는것이 유저를 배려한다고 생각합니다.)
 
-images table attribute 'ID' has AUTO_INCREMENT so i think it isn't needed.<br>
+images table column 'ID' has AUTO_INCREMENT so i think it isn't necessary.<br>
 i assume that all user doesn't know what we defined artists' id (artist_id attribute)<br>
 because of word spacing i think if i develop this part i will use checkbox or dropdown <br>
-not be input artist name directly. developer should propose aritsts' name for user friendly
+not be input artists' name directly. developer should propose it for user friendly
 
 #### 4. 가장 많은 images를 갖고있는 artist 찾아오기
 (답안: 빈센트 반 고흐)
@@ -136,12 +162,10 @@ limit 1
 
 하지만 최대값이 중복되는 경우를 고려해야한다고 생각했습니다.
 
-this query is max image count is only one, at first<br>
-group by artists' name and i got each artists' amount of masterpieces using count() function<br>
-and i got max in descanding order base on each its the number of amount <br>
-in this case max amount must be displayed
-
-but i think we have to consider maximun can be duplicated
+images table attribute 'ID' has AUTO_INCREMENT so i think it isn't needed.
+i assume that all user doesn't know what we defined artists' id (artist_id attribute)
+because of word spacing i think if i develop this part i will use checkbox or dropdown 
+not be input artist name directly. developer should propose aritsts' name for user friendly
 
 <pre>
 select
