@@ -273,9 +273,9 @@ CRUD는 Create(생성), Read(읽기), Update(수정), Delete(삭제) 를 말합�
 /api/:masterpiece/list/:page<br>
 한 페이지에 보여주는 작품의 수는 **10개**
 
-* **METHOD**
+* **Method**
 
-GET
+    `GET`
 
 * **URL Param**
 
@@ -315,7 +315,7 @@ masterpiece="masterpiece"
 
 * **Sample Code**
 
-<pre>
+```
   $.ajax({
     url: "/api/masterpiece/list/1",
     dataType: "json",
@@ -324,7 +324,7 @@ masterpiece="masterpiece"
       console.log(result);
     }
   });
-</pre>
+```
 
 --------
 
