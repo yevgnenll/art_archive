@@ -4,7 +4,7 @@ tumblbug artist data project
 ## Junior Software Engineer Project #1
 [ref](https://gist.github.com/iros/3426278) see later 
 
-this project is deal with famouse artists and their masterpiece data
+this project is deal with famous artists and their masterpiece data
 
 additional will be added
 
@@ -270,7 +270,7 @@ CRUD는 Create(생성), Read(읽기), Update(수정), Delete(삭제) 를 말합�
 
 * **URL**
 
-/api/image/:masterpiece/list/:page<br>
+/api/image/list/:masterpiece/:page<br>
 한 페이지에 보여주는 작품의 수는 **10개**
 
 * **Method**
@@ -293,7 +293,7 @@ masterpiece="masterpiece"
 * **SUCCESS Response**
 
     * **code**: 200<br>
-    **pagination**: <pre> { current_page: 1, next_url: '/api/image/masterpiece/list/2'} </pre>
+    **pagination**: <pre> { current_page: 1, next_url: '/api/image/list/masterpiece/2'} </pre>
     **pagination**: 현재 페이지는 존재하지만 다음 페이지가 없는경우 
                     <pre> { current_page: 1, next_url: null } </pre>
     **content**: 1페이지에 10개 이하의 데이터 전송
@@ -317,7 +317,7 @@ masterpiece="masterpiece"
 
 ```
   $.ajax({
-    url: "/api/image/masterpiece/list/1",
+    url: "/api/image/list/masterpiece/1",
     dataType: "json",
     type : "GET",
     success : function(result) {
@@ -326,7 +326,7 @@ masterpiece="masterpiece"
   });
 
   $.ajax({
-    url: "/api/image/검색어/list/1",
+    url: "/api/image/list/검색어/1",
     dataType: "json",
     type : "GET",
     success : function(result) {
@@ -342,7 +342,7 @@ masterpiece="masterpiece"
 
 * **URL**
 
-/api/artist/:name/list/:page<br>
+/api/artist/list/:name/:page<br>
 한 페이지에 보여주는 작품의 수는 **10개**
 
 * **Method**
@@ -364,7 +364,7 @@ name="name"
 * **SUCCESS Response**
 
     * **code**: 200<br>
-    **pagination**: <pre> { current_page: 1, next_url: '/api/artist/name/list/2'} </pre>
+    **pagination**: <pre> { current_page: 1, next_url: '/api/artist/list/name/2'} </pre>
     **pagination**: 현재 페이지는 존재하지만 다음 페이지가 없는경우 
                     <pre> { current_page: 1, next_url: null } </pre>
     **content**: 1페이지에 10개 이하의 데이터 전송
@@ -386,7 +386,7 @@ name="name"
 
 ```
   $.ajax({
-    url: "/api/artist/name/list/1",
+    url: "/api/artist/list/name/1",
     dataType: "json",
     type : "GET",
     success : function(result) {
@@ -395,7 +395,58 @@ name="name"
   });
 
   $.ajax({
-    url: "/api/artist/검색어/list/1",
+    url: "/api/artist/list/검색어/1",
+    dataType: "json",
+    type : "GET",
+    success : function(result) {
+      console.log(result);
+    }
+  });
+
+```
+
+----------
+
+#### 3. 작품 한개씩 보기(detail)
+
+* **URL**
+
+/api/image/detail/:id<br>
+
+* **Method**
+
+    `GET`
+
+* **URL Param**
+
+**required:**<br>
+id=[Integer] default is 1
+
+
+* **SUCCESS Response**
+
+    * **code**: 200<br>
+    **content**: 1페이지에 10개 이하의 데이터 전송
+    <pre>   { 
+            title: 작품의 제목[String] ,
+            year: 작품이 만들어진 연도[Date],
+            description: 작품의 설명[String],
+            name: 작가 이름[String],
+            genre: 작가의 장르[String],
+            image_url: 작품 이미지[URL],
+            }
+    </pre>
+
+* **ERROR Response**
+
+    * **code**: 404
+    **content**: <pre> { error: "Data doesn't exist" } </pre> 
+
+* **Sample Code**
+
+```
+  $.ajax({
+    url: "/api/image/detail/:id",
     dataType: "json",
     type : "GET",
     success : function(result) {
