@@ -247,3 +247,85 @@ CRUD는 Create(생성), Read(읽기), Update(수정), Delete(삭제) 를 말합�
 
 --------
 
+### 5. art_archive를 api로 설계
+
+#### 고려할 사항
+
+- API Resource
+- 어떤 endpoint를 갖는지
+- endpoint 별로 받는 param
+- 성공과 실패시 response
+
+--------
+
+**우리 API는 다음 method를 사용합니다**
+
+* **GET**: 서버에서 데이터를 찾아옵니다.
+* **POST**: 서버에 데이터를 입력합니다.
+* **PUT**: 서버의 데이터를 갱신합니다.
+* **DELETE**: 서버의 데이터를 삭제합니다.
+
+
+#### 1. 작품 list 보여주기
+
+* **URL**
+
+/api/:masterpiece/list/:page<br>
+한 페이지에 보여주는 작품의 수는 **10개**
+
+* **METHOD**
+
+GET
+
+* **URL Param**
+
+**required:**<br>
+page=[Integer] default is 1
+
+1. 검색어가 있는 경우<br>
+masterpiece=[String] 작품제목
+
+2. 검색어가 없는 경우<br>
+masterpiece="masterpiece" 
+
+
+
+* **SUCCESS Response**
+
+    * **code**: 200<br>
+    **pagination**: <pre> { current_page: 1, next_url: '/api/masterpiece/list/2'} </pre>
+    **pagination**: 현재 페이지는 존재하지만 다음 페이지가 없는경우 
+                    <pre> { current: 1, next_url: null } </pre>
+    **content**: 1페이지에 10개 이하의 데이터 전송
+    <pre>   { 
+            id: 작품의 ID[Integer], 
+            title: 작품의 제목[String] ,
+            year: 작품이 만들어진 연도[Date],
+            description: 작품의 설명[String],
+            name: 작가 이름[String],
+            genre: 작가의 장르[String],
+            image_url: 작품 이미지[URL],
+            }
+    </pre>
+
+* **ERROR Response**
+
+    * **code**: 404
+    **content**: <pre> { error: "Data doesn't exist" } </pre> 
+
+* **Sample Code**
+
+<pre>
+  $.ajax({
+    url: "/api/masterpiece/list/1",
+    dataType: "json",
+    type : "GET",
+    success : function(result) {
+      console.log(result);
+    }
+  });
+</pre>
+
+--------
+
+
