@@ -420,13 +420,13 @@ name="name"
 * **URL Param**
 
 **required:**<br>
-id=[Integer] default is 1
+id=[Integer]
 
 
 * **SUCCESS Response**
 
     * **code**: 200<br>
-    **content**: 1페이지에 10개 이하의 데이터 전송
+    **content**: 
     <pre>   { 
             title: 작품의 제목[String] ,
             year: 작품이 만들어진 연도[Date],
@@ -446,7 +446,7 @@ id=[Integer] default is 1
 
 ```
   $.ajax({
-    url: "/api/image/detail/:id",
+    url: "/api/image/detail/100",
     dataType: "json",
     type : "GET",
     success : function(result) {
@@ -457,3 +457,53 @@ id=[Integer] default is 1
 ```
 
 ----------
+#### 4. 예술가 한명씩 보기(detail)
+
+* **URL**
+
+/api/artist/detail/:id<br>
+
+* **Method**
+
+    `GET`
+
+* **URL Param**
+
+**required:**<br>
+id=[Integer]
+
+
+* **SUCCESS Response**
+
+    * **code**: 200<br>
+    **content**:
+    <pre>   { 
+            name: 예술가의 이름[String] ,
+            birth_year: 예술가가 태어난 연도[Date],
+            death_year: 예술가의 사망 연도[Date],
+            contry: 예술가의 국가[String],
+            genre: 예술가의 장르[String],
+            }
+    </pre>
+
+* **ERROR Response**
+
+    * **code**: 404
+    **content**: <pre> { error: "Data doesn't exist" } </pre> 
+
+* **Sample Code**
+
+```
+  $.ajax({
+    url: "/api/artist/detail/100",
+    dataType: "json",
+    type : "GET",
+    success : function(result) {
+      console.log(result);
+    }
+  });
+
+```
+
+---------
+
