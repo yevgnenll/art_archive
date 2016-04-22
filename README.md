@@ -270,7 +270,7 @@ CRUD는 Create(생성), Read(읽기), Update(수정), Delete(삭제) 를 말합�
 
 * **URL**
 
-/api/:masterpiece/list/:page<br>
+/api/image/:masterpiece/list/:page<br>
 한 페이지에 보여주는 작품의 수는 **10개**
 
 * **Method**
@@ -293,9 +293,9 @@ masterpiece="masterpiece"
 * **SUCCESS Response**
 
     * **code**: 200<br>
-    **pagination**: <pre> { current_page: 1, next_url: '/api/masterpiece/list/2'} </pre>
+    **pagination**: <pre> { current_page: 1, next_url: '/api/image/masterpiece/list/2'} </pre>
     **pagination**: 현재 페이지는 존재하지만 다음 페이지가 없는경우 
-                    <pre> { current: 1, next_url: null } </pre>
+                    <pre> { current_page: 1, next_url: null } </pre>
     **content**: 1페이지에 10개 이하의 데이터 전송
     <pre>   { 
             id: 작품의 ID[Integer], 
@@ -317,15 +317,92 @@ masterpiece="masterpiece"
 
 ```
   $.ajax({
-    url: "/api/masterpiece/list/1",
+    url: "/api/image/masterpiece/list/1",
     dataType: "json",
     type : "GET",
     success : function(result) {
       console.log(result);
     }
   });
+
+  $.ajax({
+    url: "/api/image/검색어/list/1",
+    dataType: "json",
+    type : "GET",
+    success : function(result) {
+      console.log(result);
+    }
+  });
+
 ```
 
 --------
 
+#### 2. 예술가 list 보여주기
 
+* **URL**
+
+/api/artist/:name/list/:page<br>
+한 페이지에 보여주는 작품의 수는 **10개**
+
+* **Method**
+
+    `GET`
+
+* **URL Param**
+
+**required:**<br>
+page=[Integer]
+
+1. 검색어가 있는 경우<br>
+name=[String] artist의 이름
+
+2. 검색어가 없는 경우<br>
+name="name"
+
+
+* **SUCCESS Response**
+
+    * **code**: 200<br>
+    **pagination**: <pre> { current_page: 1, next_url: '/api/artist/name/list/2'} </pre>
+    **pagination**: 현재 페이지는 존재하지만 다음 페이지가 없는경우 
+                    <pre> { current_page: 1, next_url: null } </pre>
+    **content**: 1페이지에 10개 이하의 데이터 전송
+    <pre>   { 
+            id: 예술가의 ID[Integer], 
+            name: 예술가의 이름[String] ,
+            birth_year: 예술가의 태어난 연도[Date],
+            death_year: 예술가의 사망한 연도[Date],
+            genre: 예술가의 장르[String],
+            }
+    </pre>
+
+* **ERROR Response**
+
+    * **code**: 404
+    **content**: <pre> { error: "Data doesn't exist" } </pre> 
+
+* **Sample Code**
+
+```
+  $.ajax({
+    url: "/api/artist/name/list/1",
+    dataType: "json",
+    type : "GET",
+    success : function(result) {
+      console.log(result);
+    }
+  });
+
+  $.ajax({
+    url: "/api/artist/검색어/list/1",
+    dataType: "json",
+    type : "GET",
+    success : function(result) {
+      console.log(result);
+    }
+  });
+
+```
+
+----------
