@@ -197,9 +197,9 @@ group by
 
 
 <pre>
-select 
+SELECT
 	amount.name
-from
+FROM
 	(SELECT
 		count(*) as image_amount, i.artist_id as artist_id, a.name
 	FROM
@@ -210,7 +210,7 @@ from
 		a.name
 	) as amount
 
-where
+WHERE
 	amount.image_amount = (SELECT
 					count(*) as image_amount
 				FROM
@@ -228,4 +228,22 @@ where
 이 쿼리를 최종 답안으로 제출합니다.
 
 ---------
+### 4. CRUD에 대한 설명
+
+CRUD는 Create(생성), Read(읽기), Update(수정), Delete(삭제) 를 말합니다.
+이 CRUD를 API와 sql query 관점에서 데이터를 송신할때 method(http request)와 query는 아래와 같습니다
+
+
+| CRUD 종류  | method | sql query |
+| ------------- | ------------- | ------------- |
+| Create | POST  | INSERT |
+| Read  | GET  | SELECT |
+| Update  | PUT  | UPDATE |
+| Delete  | DELETE  | DELETE |
+
+
+위의 4가지 기능을 모두 할 수 없다면 그 소프트웨어는 완성된게 아니라는 평가를 받는다고 합니다.
+가장 보편적인 예시로는 게시판의 기능을 생각할 수 있습니다.(글 쓰기, 읽기, 수정, 삭제)
+
+--------
 
