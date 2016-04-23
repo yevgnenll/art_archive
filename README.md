@@ -507,3 +507,55 @@ id=[Integer]
 
 ---------
 
+#### 5. 작품 입력하기 api
+
+* **URL**
+
+    /api/image/insert/
+
+* **Method**
+
+    `POST`
+
+* **URL Param**
+
+    * **required:**<br>
+    artist_id=[Integer]
+    title=[String]
+    image_url=[URL]
+    year=[Integer]
+    description=[String]
+
+
+* **SUCCESS Response**
+
+    * **code**: 201<br>
+    **content**:
+    <pre> { result: "ok"} </pre>
+
+* **ERROR Response**
+
+    * **code**: 400
+    **content**: <pre> { error: "Bad Request" } </pre> 
+
+* **Sample Code**
+
+```
+  $.ajax({
+    url: "/api/image/insert",
+    dataType: "json",
+    type : "POST",
+    data : {
+        title: "작품제목",
+        artist_id: 예술가의 id,
+        image_url: "이미지 링크",
+        year: "작품이 만들어진 연도",
+        description: "작품 설명"
+        }
+    success : function(result) {
+      console.log(result);
+    }
+  });
+
+```
+
