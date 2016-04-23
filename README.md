@@ -821,7 +821,7 @@ id=[Integer]
 
 * **Method**
 
-    `PUT`
+    `DELETE`
 
 * **URL Param**
 
