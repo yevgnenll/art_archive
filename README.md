@@ -524,16 +524,17 @@ id=[Integer]
 * **URL Param**
 
     * **required:**<br>
-    artist_id=[Integer]
-    title=[String]
-    image_url=[URL]
-    year=[Integer]
+    artist_id=[Integer] <br>
+    title=[String] <br>
+    image_url=[URL] <br>
+    year=[Integer] <br>
     description=[String]
 
+
     * **discription**:
-        artist_id로 예술가 정보가 연결됩니다.
-        입력하시는 작품의 예술가 정보가 입력되어 있지 않다면
-        아래의 예술가 입력 api를 이용해 함께 입력해주시기 바랍니다
+        artist_id로 예술가 정보가 연결됩니다. <br>
+        입력하시는 작품의 예술가 정보가 입력되어 있지 않다면 <br>
+        아래의 예술가 입력 api를 이용해 함께 입력해주시기 바랍니다 <br>
         작품에 대한 고유 ID는 자동으로 부여됩니다
 
 
@@ -586,15 +587,17 @@ id=[Integer]
 * **URL Param**
 
     * **required:**<br>
-        name=[String]
-        birth_year=[Integer]
-        death_year=[Integer]
-        country=[String]
-        genre=[String]
+        name=[String] <br>
+        birth_year=[Integer] <br>
+        death_year=[Integer] <br>
+        country=[String] <br>
+        genre=[String] <br>
+
 
     * **discription**:
-        birth_year, death_year는 연도만 입력합니다. 
+        birth_year, death_year는 연도만 입력합니다. <br>
         예술가의 id는 자동으로 부여됩니다.
+
 
 * **SUCCESS Response**
 
