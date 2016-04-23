@@ -428,6 +428,7 @@ id=[Integer]
     * **code**: 200<br>
     **content**: 
     <pre>   { 
+            id: 작품의 id[Integer]
             title: 작품의 제목[String] ,
             year: 작품이 만들어진 연도[Date],
             description: 작품의 설명[String],
@@ -478,6 +479,7 @@ id=[Integer]
     * **code**: 200<br>
     **content**:
     <pre>   { 
+            id: 예술가의 ID[Integer],
             name: 예술가의 이름[String] ,
             birth_year: 예술가가 태어난 연도[Date],
             death_year: 예술가의 사망 연도[Date],
@@ -603,7 +605,7 @@ id=[Integer]
 
     * **code**: 201<br>
     **content**:
-    <pre> { result: "OK"} </pre>
+    <pre> { result: "Created"} </pre>
 
 * **ERROR Response**
 
@@ -632,4 +634,70 @@ id=[Integer]
 ```
 
 ------
+
+#### 7. 작품정보 수정하기 
+
+기존에 입력 작품 정보를 수정할 수 있습니다.
+입력되지 않은 항목에 대해서는 수정을 하지 않으며, 공백으로 수정을 원하실경우
+빈칸(space)를 입력해주시면 반영됩니다.
+
+
+* **URL**
+
+    /api/artist/:id
+
+* **Method**
+
+    `PUT`
+
+* **URL Param**
+
+    * **required:**<br>
+        id=[Integer]
+
+    artist_id=[Integer] <br>
+    title=[String] <br>
+    image_url=[URL] <br>
+    year=[Integer] <br>
+    description=[String]
+
+
+* **SUCCESS Response**
+
+    * **code**: 200<br>
+    **content**:
+    <pre> { result: "OK"} </pre>
+
+* **ERROR Response**
+
+    * **code**: 400
+    **content**: <pre> { error: "Bad Request" } </pre> 
+
+    * **code**: 404
+    **content**: <pre> { error: "Not Found" } </pre> 
+
+
+* **Sample Code**
+
+```
+  $.ajax({
+    url: "/api/artist/{id}",
+    dataType: "json",
+    type : "PUT",
+    data : {
+        title: "예술가의 이름",
+        birth_year: "출생연도",
+        death_year: "사망연도",
+        country: "예술가의 국가"
+        genre: "예술가의 장르"
+        }
+    success : function(result) {
+      console.log(result);
+    }
+  });
+
+```
+
+------
+
 
