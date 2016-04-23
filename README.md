@@ -809,4 +809,51 @@ id=[Integer]
 
 ------
 
+#### 10. 예술가 정보 삭제하기
+
+예술가 정보를 삭제는 주의가 필요합니다.
+해당 예술가로 등록되어있는 모든 작품 정보가 함께 삭제됩니다
+
+
+* **URL**
+
+    /api/artist/:id
+
+* **Method**
+
+    `PUT`
+
+* **URL Param**
+
+    * **required:**<br>
+        id=[Integer]
+
+
+* **SUCCESS Response**
+
+    * **code**: 204<br>
+    **content**:
+    <pre> { result: "No Content"} </pre>
+
+* **ERROR Response**
+
+    * **code**: 404<br>
+    **content**: <pre> { error: "Not Found" } </pre> 
+
+
+* **Sample Code**
+
+```
+  $.ajax({
+    url: "/api/artist/{id}",
+    dataType: "json",
+    type : "DELETE",
+    success : function(result) {
+      console.log(result);
+    }
+  });
+
+```
+
+------
 
