@@ -31,7 +31,7 @@
 
 
 | Resource |  URI |
-| -------------  ------------- |
+| ------------- | ------------- |
 | 작품의 list |  /api/image/list/ |
 | 예술가의 list |  /api/image/list/ |
 | 작품 |  /api/image/ |
