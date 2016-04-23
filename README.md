@@ -681,7 +681,7 @@ id=[Integer]
 
 ```
   $.ajax({
-    url: "/api/artist/{id}",
+    url: "/api/image/{id}",
     dataType: "json",
     type : "PUT",
     data : {
@@ -746,7 +746,7 @@ id=[Integer]
 
 ```
   $.ajax({
-    url: "/api/image/{id}",
+    url: "/api/artist/{id}",
     dataType: "json",
     type : "PUT",
     data : {
@@ -756,6 +756,50 @@ id=[Integer]
         "country": "예술가의 국가",
         "genre": "예술가의 장르"
         }
+    success : function(result) {
+      console.log(result);
+    }
+  });
+
+```
+
+------
+
+#### 9. 작품정보 삭제하기
+
+
+* **URL**
+
+    /api/image/:id
+
+* **Method**
+
+    `DELETE`
+
+* **URL Param**
+
+    * **required:**<br>
+        id=[Integer]
+
+* **SUCCESS Response**
+
+    * **code**: 204<br>
+    **content**:
+    <pre> { result: "No Content"} </pre>
+
+* **ERROR Response**
+
+    * **code**: 404<br>
+    **content**: <pre> { error: "Not Found" } </pre> 
+
+
+* **Sample Code**
+
+```
+  $.ajax({
+    url: "/api/image/{id}",
+    dataType: "json",
+    type : "DELETE",
     success : function(result) {
       console.log(result);
     }
