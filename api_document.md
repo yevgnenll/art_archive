@@ -7,11 +7,43 @@
 * **PUT**: 서버의 데이터를 갱신합니다.
 * **DELETE**: 서버의 데이터를 삭제합니다.
 
+
+### art_archive의 Endpoint
+
+
+| Action | HTTP method | URI |
+| ------------- | ------------- | ------------- |
+| 작품의 list | GET | /api/image/list?page=page |
+| 예술가의 list | GET | /api/artist/list?page=page |
+| 작품 이름 검색 list | GET | /api/image/list/*keyword*?page=page |
+| 예술가 이름 검색 list | GET | /api/artist/list/*keyword*?page=page |
+| 작품 상세정보 | GET | /api/image/*id* |
+| 예술가 상세정보 | GET | /api/artist/*id* |
+| 작품 입력 | POST | /api/image/ |
+| 예술가 입력 | POST | /api/artist/ |
+| 작품 수정 | PUT | /api/image/*id* |
+| 예술가 수정 | PUT | /api/artist/*id* |
+| 작품 삭제 | DELETE | /api/image/*id* |
+| 예술가 삭제 | DELETE | /api/artist/*id* |
+
+
+### art_archive의 Resources
+
+
+| Resource |  URI |
+| -------------  ------------- |
+| 작품의 list |  /api/image/list/ |
+| 예술가의 list |  /api/image/list/ |
+| 작품 |  /api/image/ |
+| 예술가 |  /api/artist/ |
+
+
+
 #### 1. 작품 list 보여주기
 
 * **URL**
 
-/api/image/list/:masterpiece/:page<br>
+/api/image/list/:keyword?page=page<br>
 한 페이지에 보여주는 작품의 수는 **10개**
 
 * **Method**
@@ -21,20 +53,19 @@
 * **URL Param**
 
 **required:**<br>
-page=[Integer] default is 1
+page=[Integer] default = 1
 
 1. 검색어가 있는 경우<br>
-masterpiece=[String] 작품제목
+keyword=[String] 작품제목
 
 2. 검색어가 없는 경우<br>
-masterpiece="masterpiece" 
-
+/api/image/list?page=page 까지만 입력
 
 
 * **SUCCESS Response**
 
     * **code**: 200<br>
-    **pagination**: <pre> { current_page: 1, next_url: '/api/image/list/masterpiece/2'} </pre>
+    **pagination**: <pre> { current_page: 1, next_url: '/api/image/2'} </pre>
     **pagination**: 현재 페이지는 존재하지만 다음 페이지가 없는경우 
                     <pre> { current_page: 1, next_url: null } </pre>
     **content**: 1페이지에 10개 이하의 데이터 전송
@@ -58,7 +89,7 @@ masterpiece="masterpiece"
 
 ```
   $.ajax({
-    url: "/api/image/list/masterpiece/1",
+    url: "/api/image/list?page=1",
     dataType: "json",
     type : "GET",
     success : function(result) {
@@ -67,7 +98,7 @@ masterpiece="masterpiece"
   });
 
   $.ajax({
-    url: "/api/image/list/검색어/1",
+    url: "/api/image/list/{검색어}?page=2",
     dataType: "json",
     type : "GET",
     success : function(result) {
@@ -83,7 +114,7 @@ masterpiece="masterpiece"
 
 * **URL**
 
-/api/artist/list/:name/:page<br>
+/api/artist/list/:keyword?page=page<br>
 한 페이지에 보여주는 작품의 수는 **10개**
 
 * **Method**
@@ -96,16 +127,15 @@ masterpiece="masterpiece"
 page=[Integer]
 
 1. 검색어가 있는 경우<br>
-name=[String] artist의 이름
+keyword=[String] artist의 이름
 
 2. 검색어가 없는 경우<br>
-name="name"
-
+/api/artist/list?page=page 까지 입력
 
 * **SUCCESS Response**
 
     * **code**: 200<br>
-    **pagination**: <pre> { current_page: 1, next_url: '/api/artist/list/name/2'} </pre>
+    **pagination**: <pre> { current_page: 1, next_url: '/api/artist/list?page=2'} </pre>
     **pagination**: 현재 페이지는 존재하지만 다음 페이지가 없는경우 
                     <pre> { current_page: 1, next_url: null } </pre>
     **content**: 1페이지에 10개 이하의 데이터 전송
@@ -127,7 +157,7 @@ name="name"
 
 ```
   $.ajax({
-    url: "/api/artist/list/name/1",
+    url: "/api/artist/list?page=1",
     dataType: "json",
     type : "GET",
     success : function(result) {
@@ -136,7 +166,7 @@ name="name"
   });
 
   $.ajax({
-    url: "/api/artist/list/검색어/1",
+    url: "/api/artist/list/검색어?page=1",
     dataType: "json",
     type : "GET",
     success : function(result) {
@@ -152,7 +182,7 @@ name="name"
 
 * **URL**
 
-/api/image/detail/:id<br>
+/api/image/:id<br>
 
 * **Method**
 
@@ -182,13 +212,13 @@ id=[Integer]
 * **ERROR Response**
 
     * **code**: 404
-    **content**: <pre> { error: "Data doesn't exist" } </pre> 
+    **content**: <pre> { error: "Image doesn't exist" } </pre> 
 
 * **Sample Code**
 
 ```
   $.ajax({
-    url: "/api/image/detail/100",
+    url: "/api/image/100",
     dataType: "json",
     type : "GET",
     success : function(result) {
@@ -203,7 +233,7 @@ id=[Integer]
 
 * **URL**
 
-/api/artist/detail/:id<br>
+/api/artist/:id<br>
 
 * **Method**
 
@@ -232,13 +262,13 @@ id=[Integer]
 * **ERROR Response**
 
     * **code**: 404
-    **content**: <pre> { error: "Data doesn't exist" } </pre> 
+    **content**: <pre> { error: "Artist doesn't exist" } </pre> 
 
 * **Sample Code**
 
 ```
   $.ajax({
-    url: "/api/artist/detail/100",
+    url: "/api/artist/100",
     dataType: "json",
     type : "GET",
     success : function(result) {
@@ -258,7 +288,7 @@ id=[Integer]
 
 * **URL**
 
-    /api/image/insert/
+    /api/image/
 
 * **Method**
 
@@ -296,7 +326,7 @@ id=[Integer]
 
 ```
   $.ajax({
-    url: "/api/image/insert",
+    url: "/api/image/",
     dataType: "json",
     type : "POST",
     data : {
@@ -321,7 +351,7 @@ id=[Integer]
 
 * **URL**
 
-    /api/artist/insert/
+    /api/artist/
 
 * **Method**
 
@@ -357,7 +387,7 @@ id=[Integer]
 
 ```
   $.ajax({
-    url: "/api/artist/insert",
+    url: "/api/artist/",
     dataType: "json",
     type : "POST",
     data : {
