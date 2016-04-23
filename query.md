@@ -30,4 +30,36 @@ artist_id는 artists테이블의 ForeignKey로 정의됨.
 | description  | 작품 특성(유채 etc.)  |
 
 
+----------
+
+### 1. '제니 오델' 이라는 name을 가진 image의 title 가져오기
+    
+    **답안**: 쓰레기 셀카
+
+<pre>
+SELECT
+	art.*, img.*
+FROM
+	artists as art
+LEFT JOIN images AS img
+	on art.`id` = img.artist_id
+WHERE
+	art.name="제니 오델";
+</pre>
+
+이 쿼리로 처음 확인을 하였고 답안은 아래와 같습니다.
+
+<pre>
+SELECT
+	img.title
+FROM
+	artists as art
+LEFT JOIN images AS img
+	on art.`id` = img.artist_id
+WHERE
+	art.name="제니 오델";
+</pre>
+
+작품 제목만을 찾는 쿼리입니다.
+
 
