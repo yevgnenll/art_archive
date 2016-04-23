@@ -115,7 +115,7 @@ keyword=[String] 작품제목
 * **URL**
 
 /api/artist/list/:keyword?page=page<br>
-한 페이지에 보여주는 작품의 수는 **10개**
+한 페이지에 보여주는 예술가 정보의 수는 **10개**
 
 * **Method**
 
@@ -315,7 +315,7 @@ id=[Integer]
 
     * **code**: 201<br>
     **content**:
-    <pre> { result: "OK"} </pre>
+    <pre> { result: "Created"} </pre>
 
 * **ERROR Response**
 
