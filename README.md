@@ -509,6 +509,10 @@ id=[Integer]
 
 #### 5. 작품 입력하기 api
 
+작품 하나의 정보를 입력합니다. 기존에 저희 서버에 존재하는 작가의 작품을 입력하려면<br>
+작가의 artist_id를 알아야 합니다. 이것은 4번 api를 참고하시기 바랍니다.
+
+
 * **URL**
 
     /api/image/insert/
@@ -530,6 +534,7 @@ id=[Integer]
         artist_id로 예술가 정보가 연결됩니다.
         입력하시는 작품의 예술가 정보가 입력되어 있지 않다면
         아래의 예술가 입력 api를 이용해 함께 입력해주시기 바랍니다
+        작품에 대한 고유 ID는 자동으로 부여됩니다
 
 
 * **SUCCESS Response**
@@ -563,4 +568,65 @@ id=[Integer]
   });
 
 ```
+
+----------
+
+#### 6. 예술가 입력하기 api
+
+예술가 한명의 이름, 출생연도, 사망연도, 국가와 장르 정보를 입력합니다
+
+* **URL**
+
+    /api/artist/insert/
+
+* **Method**
+
+    `POST`
+
+* **URL Param**
+
+    * **required:**<br>
+        name=[String]
+        birth_year=[Integer]
+        death_year=[Integer]
+        country=[String]
+        genre=[String]
+
+    * **discription**:
+        birth_year, death_year는 연도만 입력합니다. 
+        예술가의 id는 자동으로 부여됩니다.
+
+* **SUCCESS Response**
+
+    * **code**: 201<br>
+    **content**:
+    <pre> { result: "OK"} </pre>
+
+* **ERROR Response**
+
+    * **code**: 400
+    **content**: <pre> { error: "Bad Request" } </pre> 
+
+* **Sample Code**
+
+```
+  $.ajax({
+    url: "/api/artist/insert",
+    dataType: "json",
+    type : "POST",
+    data : {
+        title: "예술가의 이름",
+        birth_year: "출생연도",
+        death_year: "사망연도",
+        country: "예술가의 국가"
+        genre: "예술가의 장르"
+        }
+    success : function(result) {
+      console.log(result);
+    }
+  });
+
+```
+
+------
 
