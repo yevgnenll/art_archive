@@ -526,12 +526,17 @@ id=[Integer]
     year=[Integer]
     description=[String]
 
+    * **discription**:
+        artist_id로 예술가 정보가 연결됩니다.
+        입력하시는 작품의 예술가 정보가 입력되어 있지 않다면
+        아래의 예술가 입력 api를 이용해 함께 입력해주시기 바랍니다
+
 
 * **SUCCESS Response**
 
     * **code**: 201<br>
     **content**:
-    <pre> { result: "ok"} </pre>
+    <pre> { result: "OK"} </pre>
 
 * **ERROR Response**
 
