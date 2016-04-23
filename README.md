@@ -559,11 +559,11 @@ id=[Integer]
     dataType: "json",
     type : "POST",
     data : {
-        title: "작품제목",
-        artist_id: 예술가의 id,
-        image_url: "이미지 링크",
-        year: "작품이 만들어진 연도",
-        description: "작품 설명"
+        "title": "작품제목",
+        "artist_id": 예술가의 id,
+        "image_url": "이미지 링크",
+        "year": "작품이 만들어진 연도",
+        "description": "작품 설명"
         }
     success : function(result) {
       console.log(result);
@@ -620,11 +620,11 @@ id=[Integer]
     dataType: "json",
     type : "POST",
     data : {
-        title: "예술가의 이름",
-        birth_year: "출생연도",
-        death_year: "사망연도",
-        country: "예술가의 국가"
-        genre: "예술가의 장르"
+        "title": "예술가의 이름",
+        "birth_year": "출생연도",
+        "death_year": "사망연도",
+        "country": "예술가의 국가"
+        "genre": "예술가의 장르"
         }
     success : function(result) {
       console.log(result);
@@ -644,7 +644,7 @@ id=[Integer]
 
 * **URL**
 
-    /api/artist/:id
+    /api/image/:id
 
 * **Method**
 
@@ -670,10 +670,10 @@ id=[Integer]
 
 * **ERROR Response**
 
-    * **code**: 400
+    * **code**: 400<br>
     **content**: <pre> { error: "Bad Request" } </pre> 
 
-    * **code**: 404
+    * **code**: 404<br>
     **content**: <pre> { error: "Not Found" } </pre> 
 
 
@@ -685,11 +685,76 @@ id=[Integer]
     dataType: "json",
     type : "PUT",
     data : {
-        title: "예술가의 이름",
-        birth_year: "출생연도",
-        death_year: "사망연도",
-        country: "예술가의 국가"
-        genre: "예술가의 장르"
+        "title": "작품 제목",
+        "image_url": "작품 이미지 url",
+        "year": "작품이 만들어진 연도",
+        "description": "작품설명"
+        }
+    success : function(result) {
+      console.log(result);
+    }
+  });
+
+```
+
+------
+
+
+#### 8. 예술가 정보 수정하기 
+
+기존에 입력된 예술가의 정보를 수정합니다.<br>
+입력되지 않은 정보들에 대해서는 수정을 반영하지 않습니다.<br>
+데이터의 신뢰성을 보장하기 위해 공백 수정은 반려합니다.
+
+
+* **URL**
+
+    /api/artist/:id
+
+* **Method**
+
+    `PUT`
+
+* **URL Param**
+
+    * **required:**<br>
+        id=[Integer]
+
+    name=[String] <br>
+    birth_year=[Integer] <br>
+    death_year=[Integer] <br>
+    country=[String] <br>
+    genre=[String] <br>
+
+
+* **SUCCESS Response**
+
+    * **code**: 200<br>
+    **content**:
+    <pre> { result: "OK"} </pre>
+
+* **ERROR Response**
+
+    * **code**: 400<br>
+    **content**: <pre> { error: "Bad Request" } </pre> 
+
+    * **code**: 404<br>
+    **content**: <pre> { error: "Not Found" } </pre> 
+
+
+* **Sample Code**
+
+```
+  $.ajax({
+    url: "/api/image/{id}",
+    dataType: "json",
+    type : "PUT",
+    data : {
+        "name": "예술가의 이름",
+        "birth_year": "출생연도",
+        "death_year": "사망연도",
+        "country": "예술가의 국가",
+        "genre": "예술가의 장르"
         }
     success : function(result) {
       console.log(result);
