@@ -82,8 +82,12 @@ keyword=[String] 예술가이름, 장르, 국가, 작품제목, 설명
 
 * **ERROR Response**
 
-    * **code**: 404
+    * **code**: 404<br>
     **content**: <pre> { error: "Data doesn't exist" } </pre> 
+
+    * **code**: 500<br>
+    **content**: <pre> { error: "Internal Server Error" } </pre> 
+
 
 * **Sample Code**
 
@@ -150,8 +154,12 @@ keyword=[String] 예술가이름, 장르, 국가, 작품제목, 설명
 
 * **ERROR Response**
 
-    * **code**: 404
+    * **code**: 404<br>
     **content**: <pre> { error: "Data doesn't exist" } </pre> 
+
+    * **code**: 500<br>
+    **content**: <pre> { error: "Internal Server Error" } </pre> 
+
 
 * **Sample Code**
 
@@ -211,8 +219,12 @@ id=[Integer]
 
 * **ERROR Response**
 
-    * **code**: 404
+    * **code**: 404<br>
     **content**: <pre> { error: "Image doesn't exist" } </pre> 
+
+    * **code**: 500<br>
+    **content**: <pre> { error: "Internal Server Error" } </pre> 
+
 
 * **Sample Code**
 
@@ -261,8 +273,12 @@ id=[Integer]
 
 * **ERROR Response**
 
-    * **code**: 404
+    * **code**: 404<br>
     **content**: <pre> { error: "Artist doesn't exist" } </pre> 
+
+    * **code**: 500<br>
+    **content**: <pre> { error: "Internal Server Error" } </pre> 
+
 
 * **Sample Code**
 
@@ -319,8 +335,12 @@ id=[Integer]
 
 * **ERROR Response**
 
-    * **code**: 400
+    * **code**: 400<br>
     **content**: <pre> { error: "Bad Request" } </pre> 
+
+    * **code**: 500<br>
+    **content**: <pre> { error: "Internal Server Error" } </pre> 
+
 
 * **Sample Code**
 
@@ -381,8 +401,12 @@ death_year=[Integer] <br>
 
 * **ERROR Response**
 
-    * **code**: 400
+    * **code**: 400<br>
     **content**: <pre> { error: "Bad Request" } </pre> 
+
+    * **code**: 500<br>
+    **content**: <pre> { error: "Internal Server Error" } </pre> 
+
 
 * **Sample Code**
 
@@ -447,6 +471,9 @@ death_year=[Integer] <br>
 
     * **code**: 404<br>
     **content**: <pre> { error: "Not Found" } </pre> 
+
+    * **code**: 500<br>
+    **content**: <pre> { error: "Internal Server Error" } </pre> 
 
 
 * **Sample Code**
@@ -513,6 +540,9 @@ death_year=[Integer] <br>
     * **code**: 404<br>
     **content**: <pre> { error: "Not Found" } </pre> 
 
+    * **code**: 500<br>
+    **content**: <pre> { error: "Internal Server Error" } </pre> 
+
 
 * **Sample Code**
 
@@ -564,6 +594,9 @@ death_year=[Integer] <br>
     * **code**: 404<br>
     **content**: <pre> { error: "Not Found" } </pre> 
 
+    * **code**: 500<br>
+    **content**: <pre> { error: "Internal Server Error" } </pre> 
+
 
 * **Sample Code**
 
@@ -611,6 +644,9 @@ death_year=[Integer] <br>
 
     * **code**: 404<br>
     **content**: <pre> { error: "Not Found" } </pre> 
+
+    * **code**: 500<br>
+    **content**: <pre> { error: "Internal Server Error" } </pre> 
 
 
 * **Sample Code**
