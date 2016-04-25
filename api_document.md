@@ -43,7 +43,7 @@
 
 * **URL**
 
-/api/image/:keyword?page=page&count=count<br>
+/api/image/?page=page&count=count<br>
 
 * **Method**
 
@@ -56,16 +56,24 @@ page=[Integer] default = 1 현재페이지
 count=[Integer] default = 10 한 페이지에 보여줄 결과의 갯수
 
 1. 검색어가 있는 경우<br>
-keyword=[String] 예술가이름, 장르, 국가, 작품제목, 설명
+    작품제목: title=[String]
+    예술가의 장르: genre=[String]
+    예술가의 국가: country=[String]
+    예술가의 이름: name=[String]
+    작품의 만들어진 연도: created=[Integer]
+    작품에 대한 설명: description=[String]
+
+    ex.) /api/image/?page=page&count=count&name="빈센트 반 고흐"&title="밤의 카페 테라스"
+
 
 2. 검색어가 없는 경우<br>
-/api/image?page=page&count=count 까지만 입력
+/api/image?page=page&count=count
 
 
 * **SUCCESS Response**
 
     * **code**: 200<br>
-    **pagination**: <pre> { current_page: 1, next_url: '/api/image/page=2&count=입력받은 수'} </pre>
+    **pagination**: <pre> { current_page: 1, next_url: '/api/image/?page=2&count=입력받은 수'} </pre>
     **pagination**: 현재 페이지는 존재하지만 다음 페이지가 없는경우 
                     <pre> { current_page: 1, next_url: null } </pre>
     **content**: 1페이지에 10개 이하의 데이터 전송
@@ -102,7 +110,7 @@ keyword=[String] 예술가이름, 장르, 국가, 작품제목, 설명
   });
 
   $.ajax({
-    url: "/api/image/{검색어}?page=2&count=15",
+    url: "/api/image/?name="에두아르 마네"&page=2&count=15",
     dataType: "json",
     type : "GET",
     success : function(result) {
@@ -131,7 +139,15 @@ page=[Integer] default is 1, 현재 페이지
 count=[Integer] default is 10, 한 페이지에 보여줄 갯수
 
 1. 검색어가 있는 경우<br>
-keyword=[String] 예술가이름, 장르, 국가, 작품제목, 설명
+    작품제목: title=[String]
+    예술가의 장르: genre=[String]
+    예술가의 국가: country=[String]
+    예술가의 이름: name=[String]
+    예술가의 출생연도: born=[Integer]
+    예술가의 사망연도: death=[Integer]
+
+    ex.) /api/artist/?page=page&count=count&country="영국"&genre="라파엘 전파"
+
 
 2. 검색어가 없는 경우<br>
 /api/artist?page=page&count=count 까지 입력
@@ -268,6 +284,11 @@ id=[Integer]
             death_year: 예술가의 사망 연도[Date],
             contry: 예술가의 국가[String],
             genre: 예술가의 장르[String],
+            materpiece : [
+                    { title: 예술가의 작품제목 1},
+                    { title: 예술가의 작품제목 2},
+                            ...
+                ]
             }
     </pre>
 
