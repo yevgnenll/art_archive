@@ -13,10 +13,10 @@
 
 | Action | HTTP method | URI |
 | ------------- | ------------- | ------------- |
-| 작품의 list | GET | /api/image/list?page=page |
-| 예술가의 list | GET | /api/artist/list?page=page |
-| 작품 이름 검색 list | GET | /api/image/list/*keyword*?page=page |
-| 예술가 이름 검색 list | GET | /api/artist/list/*keyword*?page=page |
+| 작품의 list | GET | /api/image/?page=page&count=count |
+| 예술가의 list | GET | /api/artist/?page=page&count=count |
+| 작품 이름 검색 list | GET | /api/image/*keyword*?page=page&count=count |
+| 예술가 이름 검색 list | GET | /api/artist/*keyword*?page=page&count=count |
 | 작품 상세정보 | GET | /api/image/*id* |
 | 예술가 상세정보 | GET | /api/artist/*id* |
 | 작품 입력 | POST | /api/image/ |
@@ -32,10 +32,10 @@
 
 | Resource |  URI |
 | ------------- | ------------- |
-| 작품의 list |  /api/image/list/ |
-| 예술가의 list |  /api/image/list/ |
-| 작품 |  /api/image/ |
-| 예술가 |  /api/artist/ |
+| 작품의 list |  /api/image/ |
+| 예술가의 list |  /api/artist/ |
+| 작품 |  /api/image/*id* |
+| 예술가 |  /api/artist/*id* |
 
 
 
@@ -43,8 +43,7 @@
 
 * **URL**
 
-/api/image/list/:keyword?page=page<br>
-한 페이지에 보여주는 작품의 수는 **10개**
+/api/image/:keyword?page=page&count=count<br>
 
 * **Method**
 
@@ -53,19 +52,20 @@
 * **URL Param**
 
 **required:**<br>
-page=[Integer] default = 1
+page=[Integer] default = 1 현재페이지
+count=[Integer] default = 10 한 페이지에 보여줄 결과의 갯수
 
 1. 검색어가 있는 경우<br>
 keyword=[String] 작품제목
 
 2. 검색어가 없는 경우<br>
-/api/image/list?page=page 까지만 입력
+/api/image?page=page&count=count 까지만 입력
 
 
 * **SUCCESS Response**
 
     * **code**: 200<br>
-    **pagination**: <pre> { current_page: 1, next_url: '/api/image/2'} </pre>
+    **pagination**: <pre> { current_page: 1, next_url: '/api/image/page=2&count=입력받은 수'} </pre>
     **pagination**: 현재 페이지는 존재하지만 다음 페이지가 없는경우 
                     <pre> { current_page: 1, next_url: null } </pre>
     **content**: 1페이지에 10개 이하의 데이터 전송
@@ -89,7 +89,7 @@ keyword=[String] 작품제목
 
 ```
   $.ajax({
-    url: "/api/image/list?page=1",
+    url: "/api/image/?page=1&count=15",
     dataType: "json",
     type : "GET",
     success : function(result) {
@@ -98,7 +98,7 @@ keyword=[String] 작품제목
   });
 
   $.ajax({
-    url: "/api/image/list/{검색어}?page=2",
+    url: "/api/image/{검색어}?page=2&count=15",
     dataType: "json",
     type : "GET",
     success : function(result) {
@@ -114,8 +114,7 @@ keyword=[String] 작품제목
 
 * **URL**
 
-/api/artist/list/:keyword?page=page<br>
-한 페이지에 보여주는 예술가 정보의 수는 **10개**
+/api/artist/:keyword?page=page&count=count<br>
 
 * **Method**
 
@@ -124,18 +123,19 @@ keyword=[String] 작품제목
 * **URL Param**
 
 **required:**<br>
-page=[Integer]
+page=[Integer] default is 1, 현재 페이지
+count=[Integer] default is 10, 한 페이지에 보여줄 갯수
 
 1. 검색어가 있는 경우<br>
 keyword=[String] artist의 이름
 
 2. 검색어가 없는 경우<br>
-/api/artist/list?page=page 까지 입력
+/api/artist?page=page&count=count 까지 입력
 
 * **SUCCESS Response**
 
     * **code**: 200<br>
-    **pagination**: <pre> { current_page: 1, next_url: '/api/artist/list?page=2'} </pre>
+    **pagination**: <pre> { current_page: 1, next_url: '/api/artist?page=2&count=입력받은 수'} </pre>
     **pagination**: 현재 페이지는 존재하지만 다음 페이지가 없는경우 
                     <pre> { current_page: 1, next_url: null } </pre>
     **content**: 1페이지에 10개 이하의 데이터 전송
@@ -157,7 +157,7 @@ keyword=[String] artist의 이름
 
 ```
   $.ajax({
-    url: "/api/artist/list?page=1",
+    url: "/api/artist?page=1&count=15",
     dataType: "json",
     type : "GET",
     success : function(result) {
@@ -166,7 +166,7 @@ keyword=[String] artist의 이름
   });
 
   $.ajax({
-    url: "/api/artist/list/검색어?page=1",
+    url: "/api/artist/검색어?page=1&count=15",
     dataType: "json",
     type : "GET",
     success : function(result) {
