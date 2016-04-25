@@ -56,7 +56,7 @@ page=[Integer] default = 1 현재페이지
 count=[Integer] default = 10 한 페이지에 보여줄 결과의 갯수
 
 1. 검색어가 있는 경우<br>
-keyword=[String] 작품제목
+keyword=[String] 예술가이름, 장르, 국가, 작품제목, 설명
 
 2. 검색어가 없는 경우<br>
 /api/image?page=page&count=count 까지만 입력
@@ -127,7 +127,7 @@ page=[Integer] default is 1, 현재 페이지
 count=[Integer] default is 10, 한 페이지에 보여줄 갯수
 
 1. 검색어가 있는 경우<br>
-keyword=[String] artist의 이름
+keyword=[String] 예술가이름, 장르, 국가, 작품제목, 설명
 
 2. 검색어가 없는 경우<br>
 /api/artist?page=page&count=count 까지 입력
