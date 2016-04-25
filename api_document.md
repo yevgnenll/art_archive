@@ -362,10 +362,11 @@ id=[Integer]
     * **required:**<br>
         name=[String] <br>
         birth_year=[Integer] <br>
-        death_year=[Integer] <br>
         country=[String] <br>
         genre=[String] <br>
 
+death_year=[Integer] <br>
+(살아있는 예술가에 대해서는 death_year을 입력받지 않습니다)
 
     * **discription**:
         birth_year, death_year는 연도만 입력합니다. <br>
