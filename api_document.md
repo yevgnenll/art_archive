@@ -52,16 +52,16 @@
 * **URL Param**
 
 **required:**<br>
-page=[Integer] default = 1 현재페이지
-count=[Integer] default = 10 한 페이지에 보여줄 결과의 갯수
+page=[Integer] default = 1 현재페이지<br>
+count=[Integer] default = 10 한 페이지에 보여줄 결과의 갯수<br>
 
 1. 검색어가 있는 경우<br>
-    작품제목: title=[String]
-    예술가의 장르: genre=[String]
-    예술가의 국가: country=[String]
-    예술가의 이름: name=[String]
-    작품의 만들어진 연도: created=[Integer]
-    작품에 대한 설명: description=[String]
+    작품제목: title=[String]<br>
+    예술가의 장르: genre=[String]<br>
+    예술가의 국가: country=[String]<br>
+    예술가의 이름: name=[String]<br>
+    작품의 만들어진 연도: created=[Integer] <br>
+    작품에 대한 설명: description=[String]<br>
 
     ex.) /api/image/?page=page&count=count&name="빈센트 반 고흐"&title="밤의 카페 테라스"
 
@@ -135,16 +135,16 @@ count=[Integer] default = 10 한 페이지에 보여줄 결과의 갯수
 * **URL Param**
 
 **required:**<br>
-page=[Integer] default is 1, 현재 페이지
+page=[Integer] default is 1, 현재 페이지<br>
 count=[Integer] default is 10, 한 페이지에 보여줄 갯수
 
 1. 검색어가 있는 경우<br>
-    작품제목: title=[String]
-    예술가의 장르: genre=[String]
-    예술가의 국가: country=[String]
-    예술가의 이름: name=[String]
-    예술가의 출생연도: born=[Integer]
-    예술가의 사망연도: death=[Integer]
+    작품제목: title=[String]<br>
+    예술가의 장르: genre=[String]<br>
+    예술가의 국가: country=[String]<br>
+    예술가의 이름: name=[String]<br>
+    예술가의 출생연도: born=[Integer]<br>
+    예술가의 사망연도: death=[Integer]<br>
 
     ex.) /api/artist/?page=page&count=count&country="영국"&genre="라파엘 전파"
 
