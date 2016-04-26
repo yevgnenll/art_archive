@@ -1,7 +1,7 @@
 # art_archive
 tumblbug artist data project
 
-## Junior Software Engineer Project #1
+## Junior Software Engineer Project #1
 [ref](https://gist.github.com/iros/3426278) see later 
 
 this project is deal with famous artists and their masterpiece data
@@ -47,7 +47,7 @@ CRUD는 Create(생성), Read(읽기), Update(수정), Delete(삭제) 를 말합�
 - 성공과 실패시 response
 
 --------
-### 6. TDD 를 설명해주세요. 이 개발 방식의 장단점은 무엇일까요? 
+### 6. TDD 를 설명해주세요. 이 개발 방식의 장단점은 무엇일까요? 
 
 * **TDD란?**: Test Driven Development 테스트 주도 개발
 
