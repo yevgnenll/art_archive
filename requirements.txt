@@ -3,3 +3,4 @@ pep8
 ipython
 Flask-WTF
 flask-sqlalchemy
+mysqlclient
