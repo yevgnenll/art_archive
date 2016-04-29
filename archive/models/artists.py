@@ -11,7 +11,6 @@ class Artist(db.Model):
     death_year = db.Column(db.Integer)
     country = db.Column(db.String(45))
     genre = db.Column(db.String(45))
-    # author_id = db.Column(db.Integer, db.ForeignKey('author.id'))
 
     def __repr__(self):
         return '<id:{id} artist {name}>'.format(
