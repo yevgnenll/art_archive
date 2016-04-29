@@ -22,9 +22,8 @@ def images_list():
             Image.year,
             Image.image_url,
             Image.description
-        )
+        ).limit(count).offset(page * count)
 
-        # apply serialize
         result = []
         for image in images:
             data = image.Image.data_to_dict(
