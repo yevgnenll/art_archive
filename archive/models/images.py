@@ -11,7 +11,7 @@ class Image(db.Model):
     image_url = db.Column(db.String(255))
     title = db.Column(db.String(255))
     year = db.Column(db.Integer)
-    artist_id = db.Column(db.Integer, db.ForeignKey('Artists.id'))
+    artist_id = db.Column(db.Integer, db.ForeignKey('artists.id'))
     description = db.Column(db.String(255))
 
     def __repr__(self):
