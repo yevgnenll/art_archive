@@ -8,4 +8,4 @@ app.config.from_object('config')
 db = SQLAlchemy(app)
 
 
-from archive import view
+from archive import views
