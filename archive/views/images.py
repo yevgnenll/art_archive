@@ -22,18 +22,13 @@ def images_list():
             Image.year,
             Image.image_url,
             Image.description
-        )
+        ).limit(count).offset(page * count)
 
-        # apply serialize
         result = []
         for image in images:
-            data = {}
-            data['title'] = image.title
-            data['year'] = image.year
-            data['image_url'] = image.image_url
-            data['description'] = image.description
-            data['artist_name'] = image.name
-
+            data = image.Image.data_to_dict(
+                image.name
+            )
             result.append(data)
 
         return jsonify(result=result)
