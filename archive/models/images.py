@@ -21,11 +21,12 @@ class Image(db.Model):
         )
 
     def data_to_dict(self, artist_name):
-        print(artist_name)
+
         result_dictionary = {
             "id": self.id,
             "image_url": self.image_url,
-            "title": self.year,
+            "title": self.title,
+            "year": self.year,
             "artist_id": self.artist_id,
             "description": self.description,
             "name": artist_name,

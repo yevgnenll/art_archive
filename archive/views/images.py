@@ -15,20 +15,36 @@ def images_list():
         page = request.args.get('page', 1, type=int)
         count = request.args.get('count', 10, type=int)
 
+        title = request.args.get('title', None, type=str)
+        name = request.args.get('name', None, type=str)
+        year = request.args.get('year', None, type=int)
+        description = request.args.get('description', None, type=str)
+
         images = Image.query.join(Artist, Image.artist_id == Artist.id)
+
         images = images.add_columns(
             Artist.name,
             Image.title,
             Image.year,
             Image.image_url,
             Image.description
-        ).limit(count).offset(page * count)
+        )
+        if title:
+            images = images.filter(Image.title == title)
+        if name:
+            images = images.filter(Artist.name == name)
+        if year:
+            images = images.filter(Image.year == year)
+        if description:
+            images = images.filter(Image.description == description)
 
-        result = []
+        images.limit(count).offset(page * count)
+
+        content = []
         for image in images:
             data = image.Image.data_to_dict(
                 image.name
             )
-            result.append(data)
+            content.append(data)
 
-        return jsonify(result=result)
+        return jsonify(content=content)
