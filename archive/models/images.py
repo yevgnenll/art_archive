@@ -19,3 +19,16 @@ class Image(db.Model):
             id=self.id,
             title=self.title,
         )
+
+    def data_to_dict(self, artist_name):
+        print(artist_name)
+        result_dictionary = {
+            "id": self.id,
+            "image_url": self.image_url,
+            "title": self.year,
+            "artist_id": self.artist_id,
+            "description": self.description,
+            "name": artist_name,
+        }
+
+        return result_dictionary
