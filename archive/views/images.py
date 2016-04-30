@@ -45,12 +45,20 @@ def images_list():
             images = images.filter(Image.description == description)
             next_url += "&description=" + description
 
-        list_amount = images.count()
-
         start = page * count - count
         images = images.limit(count).offset(start)
 
-        # images = images[start:start + (count - 1)]
+        list_amount = images.count()
+
+        if start + count - 1 < list_amount:
+            next_url = "/api/images/?page=" + str(page + 1) + "&count=" + str(count) + next_url
+        else:
+            next_url = None
+
+        pagination = {
+            "current_page": page,
+            "next_url": next_url,
+        }
 
         content = []
         for image in images:
@@ -62,4 +70,5 @@ def images_list():
         return jsonify(
             content=content,
             code=200,
+            pagination=pagination,
         )
