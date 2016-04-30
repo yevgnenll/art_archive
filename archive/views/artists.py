@@ -1,10 +1,9 @@
 from flask import render_template, request, jsonify, abort
 from sqlalchemy.orm import sessionmaker
 
-from archive import app
+from archive import app, db
 from archive.models import Artist, Image
-
-from archive import db
+from archive.utils import pagination_dict
 
 
 @app.route('/api/artists/', methods=['GET'])
@@ -47,18 +46,9 @@ def artist_list():
         next_url += "&death=" + death_year
 
     list_amout = artists.count()
+
     start = page * count - count
     artists = artists.limit(count).offset(start)
-
-    if start + count - 1 < list_amout:
-        next_url = "/api/artists/?page=" + str(page + 1) + "&count=" + str(count) + next_url
-    else:
-        next_url = None
-
-    pagination = {
-        "current_page": page,
-        "next_url": next_url,
-    }
 
     content = []
     for artist in artists:
@@ -67,5 +57,5 @@ def artist_list():
     return jsonify(
         cod=200,
         content=content,
-        pagination=pagination,
+        pagination=pagination_dict(page, count, list_amout, next_url),
     )
