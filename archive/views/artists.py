@@ -18,12 +18,35 @@ def artist_list():
     genre = request.args.get('genre', None, type=str)
     title = request.args.get('title', None, type=str)
     country = request.args.get('country', None, type=str)
-    death = request.args.get('death', None, type=int)
+    death_year = request.args.get('death', None, type=int)
 
-    artists = Artist.query.join(Image, Artist.id == Image.artist_id)
+    artists = Artist.query
+
+    if title:
+        artists = artists.filter(
+            Artist.id == Image.query.filter(
+                Image.title == title
+            ).value('artist_id')
+        )
+    if name:
+        artists = artists.filter(Artist.name == name)
+    if birth_year:
+        artists = artists.filter(Artist.birth_year == birth_year)
+    if genre:
+        artists = artists.filter(Artist.genre == genre)
+    if country:
+        artists = artists.filter(Artist.country == country)
+    if death_year:
+        artists = artists.filter(Artist.death_year == death_year)
+
+    start = page * count - count
+    artists = artists.limit(count).offset(start)
 
     content = []
     for artist in artists:
         content.append(artist.data_to_dict())
 
-    return jsonify(result=content)
+    return jsonify(
+        cod=200,
+        content=content,
+    )

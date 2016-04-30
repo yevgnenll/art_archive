@@ -25,6 +25,6 @@ class Artist(db.Model):
             'name': self.name,
             'birth_year': self.birth_year,
             'death_year': self.death_year,
-            'genre': self.genre
+            'genre': self.genre,
         }
         return result
