@@ -29,16 +29,28 @@ def images_list():
             Image.image_url,
             Image.description
         )
+
+        next_url = ""
+
         if title:
             images = images.filter(Image.title == title)
+            next_url += "&title=" + title
         if name:
             images = images.filter(Artist.name == name)
+            next_url += "&name=" + name
         if year:
             images = images.filter(Image.year == year)
+            next_url += "&year=" + year
         if description:
             images = images.filter(Image.description == description)
+            next_url += "&description=" + description
 
-        images.limit(count).offset(page * count)
+        list_amount = images.count()
+
+        start = page * count - count
+        images = images.limit(count).offset(start)
+
+        # images = images[start:start + (count - 1)]
 
         content = []
         for image in images:
@@ -47,4 +59,7 @@ def images_list():
             )
             content.append(data)
 
-        return jsonify(content=content)
+        return jsonify(
+            content=content,
+            code=200,
+        )
