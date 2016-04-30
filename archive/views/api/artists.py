@@ -61,7 +61,7 @@ def artist_list():
             pagination=pagination_dict(page, count, list_amout, next_url),
         )
 
-    else:
+    elif request.method == 'POST':
 
         name = request.values.get('name', type=str)
         genre = request.values.get('genre')
@@ -88,3 +88,22 @@ def artist_list():
             code=201,
             result="Created"
         )
+
+
+@app.route('/api/artists/<id>', methods=['PUT'])
+def modify(id):
+
+    params = request.values
+    result_param = {}
+    for param in params:
+        if params.get(param) == '':
+            continue
+        result_param[param] = params.get(param)
+
+    artist = Artist.query.filter(Artist.id == id).update(result_param)
+    Artist.query.session.commit()
+
+    return jsonify(
+        code=200,
+        result="OK",
+    )
