@@ -21,6 +21,7 @@ def artist_list():
     death_year = request.args.get('death', None, type=int)
 
     artists = Artist.query
+    next_url = ""
 
     if title:
         artists = artists.filter(
@@ -28,19 +29,36 @@ def artist_list():
                 Image.title == title
             ).value('artist_id')
         )
+        next_url += "&title=" + title
     if name:
         artists = artists.filter(Artist.name == name)
+        next_url += "&name=" + name
     if birth_year:
         artists = artists.filter(Artist.birth_year == birth_year)
+        next_url += "&born=" + str(birth_year)
     if genre:
         artists = artists.filter(Artist.genre == genre)
+        next_url += "&genre=" + genre
     if country:
         artists = artists.filter(Artist.country == country)
+        next_url += "&country=" + country
     if death_year:
         artists = artists.filter(Artist.death_year == death_year)
+        next_url += "&death=" + death_year
 
+    list_amout = artists.count()
     start = page * count - count
     artists = artists.limit(count).offset(start)
+
+    if start + count - 1 < list_amout:
+        next_url = "/api/artists/?page=" + str(page + 1) + "&count=" + str(count) + next_url
+    else:
+        next_url = None
+
+    pagination = {
+        "current_page": page,
+        "next_url": next_url,
+    }
 
     content = []
     for artist in artists:
@@ -49,4 +67,5 @@ def artist_list():
     return jsonify(
         cod=200,
         content=content,
+        pagination=pagination,
     )
