@@ -1,4 +1,4 @@
-from flask import render_template, request, jsonify
+from flask import render_template, request, jsonify, abort
 from sqlalchemy.orm import sessionmaker
 
 from archive import app
@@ -9,6 +9,8 @@ from archive import db
 
 @app.route('/api/images/', methods=['GET', 'POST'])
 def images_list():
+
+    # abort(404)
 
     if request.method == 'GET':
 
@@ -29,16 +31,36 @@ def images_list():
             Image.image_url,
             Image.description
         )
+
+        next_url = ""
+
         if title:
             images = images.filter(Image.title == title)
+            next_url += "&title=" + title
         if name:
             images = images.filter(Artist.name == name)
+            next_url += "&name=" + name
         if year:
             images = images.filter(Image.year == year)
+            next_url += "&year=" + year
         if description:
             images = images.filter(Image.description == description)
+            next_url += "&description=" + description
 
-        images.limit(count).offset(page * count)
+        start = page * count - count
+        images = images.limit(count).offset(start)
+
+        list_amount = images.count()
+
+        if start + count - 1 < list_amount:
+            next_url = "/api/images/?page=" + str(page + 1) + "&count=" + str(count) + next_url
+        else:
+            next_url = None
+
+        pagination = {
+            "current_page": page,
+            "next_url": next_url,
+        }
 
         content = []
         for image in images:
@@ -47,4 +69,8 @@ def images_list():
             )
             content.append(data)
 
-        return jsonify(content=content)
+        return jsonify(
+            content=content,
+            code=200,
+            pagination=pagination,
+        )
