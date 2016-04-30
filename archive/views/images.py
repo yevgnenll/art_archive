@@ -1,4 +1,4 @@
-from flask import render_template, request, jsonify
+from flask import render_template, request, jsonify, abort
 from sqlalchemy.orm import sessionmaker
 
 from archive import app
@@ -9,6 +9,8 @@ from archive import db
 
 @app.route('/api/images/', methods=['GET', 'POST'])
 def images_list():
+
+    # abort(404)
 
     if request.method == 'GET':
 
