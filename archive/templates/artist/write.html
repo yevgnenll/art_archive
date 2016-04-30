@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}
+예술가 입력하기
+{% endblock %}
+
+{% block content %}
+
+    <form action="/api/artists/" method="post">
+        <input type="text" placeholder="이름" name="name">
+        <input type="text" placeholder="태어난 곳" name="country">
+        <input type="text" placeholder="장르" name="genre">
+        <input type="text" placeholder="태어난 연도" name="birth_year">
+        <input type="text" placeholder="사망 연도" name="death_year">
+        <input type="submit">
+    </form>
+{% endblock %}
