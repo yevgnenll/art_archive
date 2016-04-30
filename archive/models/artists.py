@@ -17,3 +17,14 @@ class Artist(db.Model):
             id=self.id,
             name=self.name,
         )
+
+    def data_to_dict(self):
+
+        result = {
+            'id': self.id,
+            'name': self.name,
+            'birth_year': self.birth_year,
+            'death_year': self.death_year,
+            'genre': self.genre
+        }
+        return result
