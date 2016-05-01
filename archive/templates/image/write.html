@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}
+작품 정보 입력
+{% endblock %}
+
+{% block content %}
+
+    <form action="/api/images/" method="post">
+        <p><input type="text" name="image_url" placeholder="이미지 링크"></p>
+        <p>
+            <select id="" name="artist_id">
+                {% for artist in artists %}
+                    <option value="{{ artist.id }}">{{ artist.name }}</option>
+                {% endfor %}
+            </select>
+        </p>
+        <p><input type="text" name="title" placeholder="작품제목"></p>
+        <p><input type="text" name="year" placeholder="작품 생성 연도"></p>
+        <p><input type="text" name="description" placeholder="작품설명"></p>
+        <p><input type="submit"></p>
+    </form>
+
+{% endblock %}

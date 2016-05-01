@@ -86,7 +86,7 @@ def artist_list():
 
         return jsonify(
             code=201,
-            result="Created"
+            content={'result': 'Created'},
         )
 
 
@@ -105,14 +105,14 @@ def modify(id):
 
     return jsonify(
         code=200,
-        result="OK",
+        content={'result': 'OK'},
     )
 
 
 @app.route('/api/artists/<id>', methods=['GET'])
 def detail(id):
 
-    artist = Artist.query.filter(Artist.id == id).one()
+    artist = Artist.query.get_or_404(id)
     images = Image.query.filter(Image.artist_id == id).all()
 
     content = artist.detail_to_dict(images)

@@ -28,3 +28,12 @@ def error500(e):
         code=500,
         error="Internal Server Error",
     )
+
+
+@app.errorhandler(400)
+def error400(e):
+
+    return jsonify(
+        code=400,
+        error="Bad Request",
+    )

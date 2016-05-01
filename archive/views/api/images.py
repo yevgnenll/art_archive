@@ -8,7 +8,7 @@ from archive.utils import pagination_dict
 
 
 @app.route('/api/images/', methods=['GET', 'POST'])
-def images_list():
+def images():
 
     # abort(404)
 
@@ -64,3 +64,71 @@ def images_list():
             code=200,
             pagination=pagination_dict(page, count, list_amount, next_url),
         )
+
+    elif request.method == 'POST':
+
+        datas = request.values
+
+        title = datas.get('title')
+        artist_id = datas.get('artist_id')
+
+        is_check = Image.query.filter(Image.artist_id == artist_id).\
+            filter(Image.title == title)
+
+        if is_check.all():
+            abort(400)
+
+        image = Image()
+        Image.query.session.add(
+            image.data_get_as_dict(datas)
+        )
+
+        Image.query.session.commit()
+
+        return jsonify(
+            code=201,
+            content={'result': 'Created'},
+        )
+
+
+@app.route('/api/images/<id>', methods=['GET'])
+def images_detail(id):
+
+    image = Image.query.get_or_404(id)
+    name = Artist.query.filter(Artist.id == image.artist_id)
+
+    content = image.data_to_dict(
+        name.one().name,
+    )
+
+    return jsonify(
+        code=200,
+        content=content,
+    )
+
+
+@app.route('/api/images/<id>', methods=['PUT'])
+def images_update(id):
+
+    params = request.values
+    image = Image.query.filter(Image.id == id).update(params)
+
+    Image.query.session.commit()
+
+    return jsonify(
+        code=200,
+        content={"result": "OK"},
+    )
+
+
+@app.route('/api/images/<id>', methods=['DELETE'])
+def images_delete(id):
+
+    image = Image.query.filter(Image.id == id).delete()
+
+    Image.query.session.commit()
+
+    return jsonify(
+        code=204,
+        content={"result": "No Content"},
+    )
