@@ -18,7 +18,7 @@
                   console.log(result);
                   $('.form_update').css('display', 'none');
                   $('.code').text("code: "+ result.code);
-                  $('.result').text(", result: "+  result.result);
+                  $('.result').text(", result: "+  result.content.result);
                 });
             });
 

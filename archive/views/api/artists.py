@@ -86,7 +86,7 @@ def artist_list():
 
         return jsonify(
             code=201,
-            result="Created"
+            content={'result': 'Created'},
         )
 
 
@@ -105,7 +105,7 @@ def modify(id):
 
     return jsonify(
         code=200,
-        result="OK",
+        content={'result': 'OK'},
     )
 
 

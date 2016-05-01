@@ -87,7 +87,7 @@ def images():
 
         return jsonify(
             code=201,
-            result="Created",
+            content={'result': 'Created'},
         )
 
 
