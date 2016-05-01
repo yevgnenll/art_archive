@@ -1,6 +1,7 @@
 (function(){
     $(document).ready(function(){
-        image_id = $('#update_btn').data('image-id');
+
+        var image_id = $('#update_btn').data('image-id');
 
         $('#update_btn').click(function(){
 		    $.ajax({

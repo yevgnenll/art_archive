@@ -119,3 +119,16 @@ def images_update(id):
         code=200,
         result="OK",
     )
+
+
+@app.route('/api/images/<id>', methods=['DELETE'])
+def images_delete(id):
+
+    image = Image.query.filter(Image.id == id).delete()
+
+    Image.query.session.commit()
+
+    return jsonify(
+        code=200,
+        result="OK",
+    )
