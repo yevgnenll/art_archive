@@ -21,3 +21,14 @@ def artist_update(id):
         'artist/update.html',
         artist=artist,
     )
+
+
+@app.route('/artist/delete/<id>', methods=['GET'])
+def artist_delete(id):
+
+    artist = Artist.query.get_or_404(id)
+
+    return render_template(
+        'artist/delete.html',
+        artist=artist,
+    )

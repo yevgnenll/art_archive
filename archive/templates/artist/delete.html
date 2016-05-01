@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}
+예술가 정보 삭제
+{% endblock %}
+
+{% block content %}
+
+    <div class="before_delete">
+        <button id="delete_item" data-artist-id="{{ artist.id }}">예술가 삭제</button>
+        <h1>{{ artist.name }}</h1>
+        <img src="{{ artist.image_url }}" alt="">
+        <ul>
+            <li>{{ artist.birth_year }}</li>
+            <li>{{ artist.death_year }}</li>
+            <li>{{ artist.country }}</li>
+            <li>{{ artist.genre }}</li>
+        </ul>
+    </div>
+
+    <div class="json">
+        <span class="code"></span>
+        <span class="result"></span>
+    </div>
+    <script src="{{ url_for('static', filename='js/artist/delete.js') }}"></script>
+
+{% endblock %}
