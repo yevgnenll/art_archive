@@ -22,6 +22,12 @@
     <p><input type="text" id="year" placeholder="작품 생성 연도" value="{{ image.year }}"></p>
     <p><input type="text" id="description" placeholder="작품설명" value="{{ image.description }}"></p>
     <button id="update_btn" data-image-id="{{ image.id }}">수정하기</button>
+
+        <div class="json">
+            <span class="code"></span>
+            <span class="result"></span>
+        </div>
+
     <script src="{{ url_for('static', filename='js/images/update.js') }}"></script>
 
 {% endblock %}

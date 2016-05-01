@@ -75,8 +75,6 @@ def images():
         is_check = Image.query.filter(Image.artist_id == artist_id).\
             filter(Image.title == title)
 
-        print(is_check.all())
-
         if is_check.all():
             abort(400)
 
@@ -112,14 +110,12 @@ def images_detail(id):
 @app.route('/api/images/<id>', methods=['PUT'])
 def images_update(id):
 
-    image = Image.query.get_or_404(id)
-    name = Artist.query.filter(Artist.id == image.artist_id)
+    params = request.values
+    image = Image.query.filter(Image.id == id).update(params)
 
-    content = image.data_to_dict(
-        name.one().name,
-    )
+    Image.query.session.commit()
 
     return jsonify(
         code=200,
-        content=content,
+        result="OK",
     )
