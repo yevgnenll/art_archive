@@ -8,7 +8,7 @@ from archive.utils import pagination_dict
 
 
 @app.route('/api/images/', methods=['GET', 'POST'])
-def images_list():
+def images():
 
     # abort(404)
 
@@ -87,3 +87,19 @@ def images_list():
             code=201,
             result="Created",
         )
+
+
+@app.route('/api/images/<id>', methods=['GET'])
+def images_detail(id):
+
+    image = Image.query.get_or_404(id)
+    name = Artist.query.filter(Artist.id == image.artist_id)
+
+    content = image.data_to_dict(
+        name.one().name,
+    )
+
+    return jsonify(
+        code=200,
+        content=content,
+    )
