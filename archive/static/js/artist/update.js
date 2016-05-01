@@ -16,6 +16,7 @@
                     }
                 }).success(function(result){
                   console.log(result);
+                  $('.form_update').css('display', 'none');
                   $('.code').text("code: "+ result.code);
                   $('.result').text(", result: "+  result.result);
                 });
