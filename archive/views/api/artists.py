@@ -112,7 +112,7 @@ def modify(id):
 @app.route('/api/artists/<id>', methods=['GET'])
 def detail(id):
 
-    artist = Artist.query.filter(Artist.id == id).one()
+    artist = Artist.query.get_or_404(id)
     images = Image.query.filter(Image.artist_id == id).all()
 
     content = artist.detail_to_dict(images)
