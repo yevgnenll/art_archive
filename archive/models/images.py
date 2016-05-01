@@ -33,3 +33,13 @@ class Image(db.Model):
         }
 
         return result_dictionary
+
+    def data_get_as_dict(self, params):
+
+        self.image_url = params['image_url']
+        self.title = params['title']
+        self.year = params['year']
+        self.artist_id = params['artist_id']
+        self.description = params['description']
+
+        return self

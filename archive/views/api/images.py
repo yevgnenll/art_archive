@@ -64,3 +64,23 @@ def images_list():
             code=200,
             pagination=pagination_dict(page, count, list_amount, next_url),
         )
+
+    elif request.method == 'POST':
+
+        datas = request.values
+        params = {}
+        for data in datas:
+            params[data] = datas[data]
+
+        image = Image()
+
+        Image.query.session.add(
+            image.data_get_as_dict(params)
+        )
+
+        Image.query.session.commit()
+
+        return jsonify(
+            code=201,
+            result="Created",
+        )
