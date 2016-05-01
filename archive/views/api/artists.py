@@ -121,3 +121,18 @@ def detail(id):
         code=200,
         content=content,
     )
+
+
+@app.route('/api/artists/<id>', methods=['DELETE'])
+def delete(id):
+
+    image = Image.query.filter(Image.artist_id == id).delete()
+    artist = Artist.query.filter(Artist.id == id).delete()
+
+    Image.query.session.commit()
+    Artist.query.session.commit()
+
+    return jsonify(
+        code=204,
+        content={"result": "No Content"},
+    )
