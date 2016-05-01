@@ -117,7 +117,7 @@ def images_update(id):
 
     return jsonify(
         code=200,
-        result="OK",
+        content={"result": "OK"},
     )
 
 
@@ -129,6 +129,6 @@ def images_delete(id):
     Image.query.session.commit()
 
     return jsonify(
-        code=200,
-        result="OK",
+        code=204,
+        content={"result": "No Content"},
     )
