@@ -26,3 +26,14 @@ def image_update(id):
         artists=authors,
         image=image,
     )
+
+
+@app.route('/image/delete/<id>', methods=['GET'])
+def image_delete(id):
+
+    image = Image.query.get_or_404(id)
+
+    return render_template(
+        'image/delete.html',
+        image=image,
+    )
