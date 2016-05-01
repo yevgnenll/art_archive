@@ -67,13 +67,17 @@ def images():
 
     elif request.method == 'POST':
 
-        title = request.values.get('title')
-        artist_id = request.values.get('artist_id')
+        datas = request.values
+
+        title = datas.get('title')
+        artist_id = datas.get('artist_id')
 
         is_check = Image.query.filter(Image.artist_id == artist_id).\
             filter(Image.title == title)
 
-        if is_check:
+        print(is_check.all())
+
+        if is_check.all():
             abort(400)
 
         image = Image()
@@ -91,6 +95,22 @@ def images():
 
 @app.route('/api/images/<id>', methods=['GET'])
 def images_detail(id):
+
+    image = Image.query.get_or_404(id)
+    name = Artist.query.filter(Artist.id == image.artist_id)
+
+    content = image.data_to_dict(
+        name.one().name,
+    )
+
+    return jsonify(
+        code=200,
+        content=content,
+    )
+
+
+@app.route('/api/images/<id>', methods=['PUT'])
+def images_update(id):
 
     image = Image.query.get_or_404(id)
     name = Artist.query.filter(Artist.id == image.artist_id)
