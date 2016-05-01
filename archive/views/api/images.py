@@ -67,15 +67,18 @@ def images_list():
 
     elif request.method == 'POST':
 
-        datas = request.values
-        params = {}
-        for data in datas:
-            params[data] = datas[data]
+        title = request.values.get('title')
+        artist_id = request.values.get('artist_id')
+
+        is_check = Image.query.filter(Image.artist_id == artist_id).\
+            filter(Image.title == title)
+
+        if is_check:
+            abort(400)
 
         image = Image()
-
         Image.query.session.add(
-            image.data_get_as_dict(params)
+            image.data_get_as_dict(datas)
         )
 
         Image.query.session.commit()
