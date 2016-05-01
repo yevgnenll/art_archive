@@ -34,3 +34,16 @@ class Artist(db.Model):
             'genre': self.genre,
         }
         return result
+
+    def detail_to_dict(self, datas):
+
+        masterpiece = []
+        for data in datas:
+            title = {}
+            title['title'] = data.title
+            masterpiece.append(title)
+
+        result = self.data_to_dict()
+        result['masterpiece'] = masterpiece
+
+        return result

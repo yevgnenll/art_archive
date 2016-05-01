@@ -107,3 +107,17 @@ def modify(id):
         code=200,
         result="OK",
     )
+
+
+@app.route('/api/artists/<id>', methods=['GET'])
+def detail(id):
+
+    artist = Artist.query.filter(Artist.id == id).one()
+    images = Image.query.filter(Image.artist_id == id).all()
+
+    content = artist.detail_to_dict(images)
+
+    return jsonify(
+        code=200,
+        content=content,
+    )
