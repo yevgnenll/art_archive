@@ -36,9 +36,16 @@ class Image(db.Model):
 
     def data_get_as_dict(self, params):
 
+        year = params['year']
+
+        try:
+            year = int(year)
+        except ValueError:
+            abort(400)
+
+        self.year = year
         self.image_url = params['image_url']
         self.title = params['title']
-        self.year = params['year']
         self.artist_id = params['artist_id']
         self.description = params['description']
 

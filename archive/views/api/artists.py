@@ -3,91 +3,83 @@ from sqlalchemy.orm import sessionmaker
 
 from archive import app, db
 from archive.models import Artist, Image
-from archive.utils import pagination_dict
+from archive.utils import pagination_dict, get_next_url, artist_data_filter, params_to_dict
 
 
-@app.route('/api/artists/', methods=['GET', 'POST'])
+@app.route('/api/artists/', methods=['GET'])
 def artist_list():
 
-    if request.method == 'GET':
-        page = request.args.get('page', 1, type=int)
-        count = request.args.get('count', 10, type=int)
+    page = request.args.get('page', 1, type=int)
+    count = request.args.get('count', 10, type=int)
 
-        name = request.args.get('name', None, type=str)
-        birth_year = request.args.get('born', None, type=int)
-        genre = request.args.get('genre', None, type=str)
-        title = request.args.get('title', None, type=str)
-        country = request.args.get('country', None, type=str)
-        death_year = request.args.get('death', None, type=int)
+    name = request.args.get('name', None, type=str)
+    birth_year = request.args.get('born', None, type=int)
+    genre = request.args.get('genre', None, type=str)
+    title = request.args.get('title', None, type=str)
+    country = request.args.get('country', None, type=str)
+    death_year = request.args.get('death', None, type=int)
 
-        artists = Artist.query
-        next_url = ""
+    artists = Artist.query
+    next_url = ""
 
-        if title:
-            artists = artists.filter(
-                Artist.id == Image.query.filter(
-                    Image.title == title
-                ).value('artist_id')
-            )
-            next_url += "&title=" + title
-        if name:
-            artists = artists.filter(Artist.name == name)
-            next_url += "&name=" + name
-        if birth_year:
-            artists = artists.filter(Artist.birth_year == birth_year)
-            next_url += "&born=" + str(birth_year)
-        if genre:
-            artists = artists.filter(Artist.genre == genre)
-            next_url += "&genre=" + genre
-        if country:
-            artists = artists.filter(Artist.country == country)
-            next_url += "&country=" + country
-        if death_year:
-            artists = artists.filter(Artist.death_year == death_year)
-            next_url += "&death=" + death_year
-
-        list_amout = artists.count()
-
-        start = page * count - count
-        artists = artists.limit(count).offset(start)
-
-        content = []
-        for artist in artists:
-            content.append(artist.data_to_dict())
-
-        return jsonify(
-            cod=200,
-            content=content,
-            pagination=pagination_dict(page, count, list_amout, next_url),
+    if title:
+        artists = artists.filter(
+            Artist.id == Image.query.filter(
+                Image.title == title
+            ).value('artist_id')
         )
+        next_url += "&title=" + title
+    if name:
+        artists = artists.filter(Artist.name == name)
+        next_url += "&name=" + name
+    if birth_year:
+        artists = artists.filter(Artist.birth_year == birth_year)
+        next_url += "&born=" + str(birth_year)
+    if genre:
+        artists = artists.filter(Artist.genre == genre)
+        next_url += "&genre=" + genre
+    if country:
+        artists = artists.filter(Artist.country == country)
+        next_url += "&country=" + country
+    if death_year:
+        artists = artists.filter(Artist.death_year == death_year)
+        next_url += "&death=" + death_year
 
-    elif request.method == 'POST':
+    list_amout = artists.count()
 
-        name = request.values.get('name', type=str)
-        genre = request.values.get('genre')
-        birth_year = request.values.get('birth_year', None, type=int)
-        death_year = request.values.get('death_year', None, type=int)
-        country = request.values.get('country')
+    start = page * count - count
+    artists = artists.limit(count).offset(start)
 
-        if not name:
-            abort(400)
+    content = []
+    for artist in artists:
+        content.append(artist.data_to_dict())
 
-        db.session.add(
-            Artist(
-                name=name,
-                genre=genre,
-                birth_year=birth_year,
-                death_year=death_year,
-                country=country,
-            )
-        )
+    return jsonify(
+        cod=200,
+        content=content,
+        pagination=pagination_dict(page, count, list_amout, next_url),
+    )
 
-        db.session.commit()
 
-        return jsonify(
-            code=201,
-            content={'result': 'Created'},
-        )
+@app.route('/api/artists/', methods=['POST'])
+def artist_insert():
+
+    datas = request.values
+    name = datas.get('name', type=str)
+
+    if not name:
+        abort(400)
+
+    artist = Artist()
+    db.session.add(
+        artist.data_get_as_dict(datas)
+    )
+    db.session.commit()
+
+    return jsonify(
+        code=201,
+        content={'result': 'Created'},
+    )
 
 
 @app.route('/api/artists/<id>', methods=['PUT'])

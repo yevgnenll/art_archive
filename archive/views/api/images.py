@@ -7,88 +7,86 @@ from archive.models import Artist, Image
 from archive.utils import pagination_dict
 
 
-@app.route('/api/images/', methods=['GET', 'POST'])
+@app.route('/api/images/', methods=['GET'])
 def images():
 
-    # abort(404)
+    page = request.args.get('page', 1, type=int)
+    count = request.args.get('count', 10, type=int)
 
-    if request.method == 'GET':
+    title = request.args.get('title', None, type=str)
+    name = request.args.get('name', None, type=str)
+    year = request.args.get('year', None, type=int)
+    description = request.args.get('description', None, type=str)
 
-        page = request.args.get('page', 1, type=int)
-        count = request.args.get('count', 10, type=int)
+    images = Image.query.join(Artist, Image.artist_id == Artist.id)
 
-        title = request.args.get('title', None, type=str)
-        name = request.args.get('name', None, type=str)
-        year = request.args.get('year', None, type=int)
-        description = request.args.get('description', None, type=str)
+    images = images.add_columns(
+        Artist.name,
+        Image.title,
+        Image.year,
+        Image.image_url,
+        Image.description
+    )
 
-        images = Image.query.join(Artist, Image.artist_id == Artist.id)
+    next_url = ""
 
-        images = images.add_columns(
-            Artist.name,
-            Image.title,
-            Image.year,
-            Image.image_url,
-            Image.description
+    if title:
+        images = images.filter(Image.title == title)
+        next_url += "&title=" + title
+    if name:
+        images = images.filter(Artist.name == name)
+        next_url += "&name=" + name
+    if year:
+        images = images.filter(Image.year == year)
+        next_url += "&year=" + year
+    if description:
+        images = images.filter(Image.description == description)
+        next_url += "&description=" + description
+
+    start = page * count - count
+    list_amount = images.count()
+
+    images = images.limit(count).offset(start)
+
+    content = []
+    for image in images:
+        data = image.Image.data_to_dict(
+            image.name
         )
+        content.append(data)
 
-        next_url = ""
+    return jsonify(
+        content=content,
+        code=200,
+        pagination=pagination_dict(page, count, list_amount, next_url),
+    )
 
-        if title:
-            images = images.filter(Image.title == title)
-            next_url += "&title=" + title
-        if name:
-            images = images.filter(Artist.name == name)
-            next_url += "&name=" + name
-        if year:
-            images = images.filter(Image.year == year)
-            next_url += "&year=" + year
-        if description:
-            images = images.filter(Image.description == description)
-            next_url += "&description=" + description
 
-        start = page * count - count
-        list_amount = images.count()
+@app.route('/api/images/', methods=['POST'])
+def images_insert():
 
-        images = images.limit(count).offset(start)
+    datas = request.values
 
-        content = []
-        for image in images:
-            data = image.Image.data_to_dict(
-                image.name
-            )
-            content.append(data)
+    title = datas.get('title')
+    artist_id = datas.get('artist_id')
 
-        return jsonify(
-            content=content,
-            code=200,
-            pagination=pagination_dict(page, count, list_amount, next_url),
-        )
+    is_check = Image.query.filter(Image.artist_id == artist_id).\
+        filter(Image.title == title).filter(Image.artist_id == artist_id)
 
-    elif request.method == 'POST':
+    if is_check.all():
+        abort(400)
 
-        datas = request.values
+    image = Image()
+    Image.query.session.add(
+        image.data_get_as_dict(datas)
+    )
 
-        title = datas.get('title')
-        artist_id = datas.get('artist_id')
+    Image.query.session.commit()
 
-        is_check = Image.query.filter(Image.artist_id == artist_id).\
-            filter(Image.title == title)
-
-        if is_check.all():
-            abort(400)
-
-        image = Image()
-        Image.query.session.add(
-            image.data_get_as_dict(datas)
-        )
-
-        Image.query.session.commit()
-
-        return jsonify(
-            code=201,
-            content={'result': 'Created'},
-        )
+    return jsonify(
+        code=201,
+        content={'result': 'Created'},
+    )
 
 
 @app.route('/api/images/<id>', methods=['GET'])

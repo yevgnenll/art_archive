@@ -1,5 +1,7 @@
 from archive import db
 
+from flask import abort
+
 
 class Artist(db.Model):
 
@@ -47,3 +49,22 @@ class Artist(db.Model):
         result['masterpiece'] = masterpiece
 
         return result
+
+    def data_get_as_dict(self, params):
+
+        birth = params.get('birth_year')
+        death = params.get('death_year')
+
+        try:
+            birth = int(birth)
+            death = int(death)
+        except:
+            abort(400)
+
+        self.name = params['name']
+        self.birth_year = birth
+        self.death_year = death
+        self.country = params['country']
+        self.genre = params['genre']
+
+        return self
