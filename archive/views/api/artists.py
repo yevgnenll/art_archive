@@ -56,7 +56,11 @@ def modify(id):
             continue
         result_param[param] = params.get(param)
 
-    artist = Artist.query.filter(Artist.id == id).update(result_param)
+    artist = Artist.query.filter(Artist.id == id)
+
+    if not artist.all():
+        abort(404)
+    artist = artist.update(result_param)
     Artist.query.session.commit()
 
     return jsonify(
@@ -70,6 +74,8 @@ def detail(id):
 
     artist = Artist.query.get_or_404(id)
     images = Image.query.filter(Image.artist_id == id).all()
+    if not images:
+        abort(404)
 
     content = artist.detail_to_dict(images)
 
@@ -83,7 +89,11 @@ def detail(id):
 def delete(id):
 
     image = Image.query.filter(Image.artist_id == id).delete()
-    artist = Artist.query.filter(Artist.id == id).delete()
+    artist = Artist.query.filter(Artist.id == id)
+
+    if not artist.all():
+        abort(404)
+    artist.delete()
 
     Image.query.session.commit()
     Artist.query.session.commit()
