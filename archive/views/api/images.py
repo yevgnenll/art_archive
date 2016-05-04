@@ -4,30 +4,20 @@ from sqlalchemy.orm import sessionmaker
 from archive import app
 from archive.models import Artist, Image
 
-from archive.utils import pagination_dict, image_data_filter
+from archive.utils import pagination_dict, image_data_filter,\
+    image_add_columns, pagination_for_list, title_artist_exist
 
 
 @app.route('/api/images/', methods=['GET'])
 def images():
 
-    page = request.args.get('page', 1, type=int)
-    count = request.args.get('count', 10, type=int)
-
     images = Image.query.join(Artist, Image.artist_id == Artist.id)
-    images = images.add_columns(
-        Artist.name,
-        Image.title,
-        Image.year,
-        Image.image_url,
-        Image.description
-    )
-
+    images = image_add_columns(images)
     images = image_data_filter(request.args, images)
 
-    start = page * count - count
     list_amount = images.count()
 
-    images = images.limit(count).offset(start)
+    images = pagination_for_list(request.args, images)
 
     content = []
     for image in images:
@@ -48,13 +38,8 @@ def images_insert():
 
     datas = request.values
 
-    title = datas.get('title')
-    artist_id = datas.get('artist_id')
-
-    is_check = Image.query.filter(Image.artist_id == artist_id).\
-        filter(Image.title == title).filter(Image.artist_id == artist_id)
-
-    if is_check.all():
+    is_check = title_artist_exist(datas)
+    if not is_check:
         abort(400)
 
     image = Image()
