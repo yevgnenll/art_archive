@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}
+예술가 정보 수정하기
+{% endblock %}
+
+{% block content %}
+
+    <div class="form_update">
+        <input type="text" placeholder="{{ artist.name}}" value="{{ artist.name }}" id="name">
+        <input type="text" placeholder="{{ artist.country }}" value="{{ artist.country }}" id="country">
+        <input type="text" placeholder="{{ artist.genre }}" value="{{ artist.genre }}" id="genre">
+        <input type="text" placeholder="{{ artist.birth_year }}" 
+            value="{% if artist.birth_year %}{{ artist.birth_year }}{% endif %}" 
+        id="birth_year">
+        <input type="text" placeholder="{{ artist.death_year}}" 
+            value="{% if artist.death_year %}{{ artist.death_year }}{% endif %}"
+        id="death_year">
+        <button id="update_btn" data-artist-id="{{ artist.id}}">수정하기</button>
+    </div>
+
+
+    <div class="json">
+        <span class="code"></span>
+        <span class="result"></span>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/artist/update.js') }}"></script>
+{% endblock %}

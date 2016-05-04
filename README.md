@@ -79,3 +79,18 @@ CRUD는 Create(생성), Read(읽기), Update(수정), Delete(삭제) 를 말합�
 
 
 ---------
+
+
+### 확인
+
+library
+
+```
+pip install -r requirements.txt
+```
+
+commit 전 pep8 체크
+
+"""
+ln config/git/hook/pre-commit .git/hooks/
+"""

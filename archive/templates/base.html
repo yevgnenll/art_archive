@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock %}</title>
+    <script src="//code.jquery.com/jquery.min.js"></script>
+</head>
+<body>
+    <header>
+        <ul>
+            <li><a href="/api/artists/">예술가 list</a></li>
+            <li><a href="/api/images/">작품 list</a></li>
+            <li><a href="/artist/write">예술가 등록 페이지</a></li>
+            <li><a href="/artist/update">예술가 정보 수정</a></li>
+            <li><a href="/artist/delete">예술가 삭제</a></li>
+            <li><a href="/image/write">작품정보 입력</a></li>
+            <li><a href="/image/update">작품정보 수정</a></li>
+            <li><a href="/image/delete">작품정보 삭제</a></li>
+        </ul>
+    </header>
+
+    {% block content %}
+    {% endblock %}
+
+    <footer>
+        <h3>footer</h3>
+    </footer>
+
+</body>
+</html>

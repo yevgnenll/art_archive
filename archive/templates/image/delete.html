@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}
+작품 정보 삭제
+{% endblock %}
+
+{% block content %}
+
+    <div class="before_delete">
+        <button id="delete_item" data-image-id="{{ image.id }}">이 작품 삭제하기</button>
+        <h1>{{ image.title }}</h1>
+        <img src="{{ image.image_url }}" alt="">
+        <ul>
+            <li>{{ image.year }}</li>
+            <li>{{ image.description }}</li>
+        </ul>
+    </div>
+
+    <div class="json">
+        <span class="code"></span>
+        <span class="result"></span>
+    </div>
+    <script src="{{ url_for('static', filename='js/images/delete.js') }}"></script>
+
+{% endblock %}
