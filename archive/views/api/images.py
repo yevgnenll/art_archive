@@ -4,49 +4,20 @@ from sqlalchemy.orm import sessionmaker
 from archive import app
 from archive.models import Artist, Image
 
-from archive.utils import pagination_dict
+from archive.utils import pagination_dict, image_data_filter,\
+    image_add_columns, pagination_for_list, title_artist_exist
 
 
 @app.route('/api/images/', methods=['GET'])
 def images():
 
-    page = request.args.get('page', 1, type=int)
-    count = request.args.get('count', 10, type=int)
-
-    title = request.args.get('title', None, type=str)
-    name = request.args.get('name', None, type=str)
-    year = request.args.get('year', None, type=int)
-    description = request.args.get('description', None, type=str)
-
     images = Image.query.join(Artist, Image.artist_id == Artist.id)
+    images = image_add_columns(images)
+    images = image_data_filter(request.args, images)
 
-    images = images.add_columns(
-        Artist.name,
-        Image.title,
-        Image.year,
-        Image.image_url,
-        Image.description
-    )
-
-    next_url = ""
-
-    if title:
-        images = images.filter(Image.title == title)
-        next_url += "&title=" + title
-    if name:
-        images = images.filter(Artist.name == name)
-        next_url += "&name=" + name
-    if year:
-        images = images.filter(Image.year == year)
-        next_url += "&year=" + year
-    if description:
-        images = images.filter(Image.description == description)
-        next_url += "&description=" + description
-
-    start = page * count - count
     list_amount = images.count()
 
-    images = images.limit(count).offset(start)
+    images = pagination_for_list(request.args, images)
 
     content = []
     for image in images:
@@ -58,7 +29,7 @@ def images():
     return jsonify(
         content=content,
         code=200,
-        pagination=pagination_dict(page, count, list_amount, next_url),
+        pagination=pagination_dict(request.args, list_amount),
     )
 
 
@@ -67,13 +38,8 @@ def images_insert():
 
     datas = request.values
 
-    title = datas.get('title')
-    artist_id = datas.get('artist_id')
-
-    is_check = Image.query.filter(Image.artist_id == artist_id).\
-        filter(Image.title == title).filter(Image.artist_id == artist_id)
-
-    if is_check.all():
+    is_check = title_artist_exist(datas)
+    if not is_check:
         abort(400)
 
     image = Image()
