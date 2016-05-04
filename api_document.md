@@ -13,18 +13,18 @@
 
 | Action | HTTP method | URI |
 | ------------- | ------------- | ------------- |
-| 작품의 list | GET | /api/image/?page=page&count=count |
-| 예술가의 list | GET | /api/artist/?page=page&count=count |
-| 작품 이름 검색 list | GET | /api/image/*keyword*?page=page&count=count |
-| 예술가 이름 검색 list | GET | /api/artist/*keyword*?page=page&count=count |
-| 작품 상세정보 | GET | /api/image/*id* |
-| 예술가 상세정보 | GET | /api/artist/*id* |
-| 작품 입력 | POST | /api/image/ |
-| 예술가 입력 | POST | /api/artist/ |
-| 작품 수정 | PUT | /api/image/*id* |
-| 예술가 수정 | PUT | /api/artist/*id* |
-| 작품 삭제 | DELETE | /api/image/*id* |
-| 예술가 삭제 | DELETE | /api/artist/*id* |
+| 작품의 list | GET | /api/images/?page=page&count=count |
+| 예술가의 list | GET | /api/artists/?page=page&count=count |
+| 작품 이름 검색 list | GET | /api/images/*keyword*?page=page&count=count |
+| 예술가 이름 검색 list | GET | /api/artists/*keyword*?page=page&count=count |
+| 작품 상세정보 | GET | /api/images/*id* |
+| 예술가 상세정보 | GET | /api/artists/*id* |
+| 작품 입력 | POST | /api/images/ |
+| 예술가 입력 | POST | /api/artists/ |
+| 작품 수정 | PUT | /api/images/*id* |
+| 예술가 수정 | PUT | /api/artists/*id* |
+| 작품 삭제 | DELETE | /api/images/*id* |
+| 예술가 삭제 | DELETE | /api/artists/*id* |
 
 
 ### art_archive의 Resources
@@ -32,10 +32,10 @@
 
 | Resource |  URI |
 | ------------- | ------------- |
-| 작품의 list |  /api/image/ |
-| 예술가의 list |  /api/artist/ |
-| 작품 |  /api/image/*id* |
-| 예술가 |  /api/artist/*id* |
+| 작품의 list |  /api/images/ |
+| 예술가의 list |  /api/artists/ |
+| 작품 |  /api/images/*id* |
+| 예술가 |  /api/artists/*id* |
 
 
 
@@ -43,7 +43,7 @@
 
 * **URL**
 
-/api/image/?page=page&count=count<br>
+/api/images/?page=page&count=count<br>
 
 * **Method**
 
@@ -63,17 +63,17 @@ count=[Integer] default = 10 한 페이지에 보여줄 결과의 갯수<br>
     작품의 만들어진 연도: created=[Integer] <br>
     작품에 대한 설명: description=[String]<br>
 
-    ex.) /api/image/?page=page&count=count&name="빈센트 반 고흐"&title="밤의 카페 테라스"
+    ex.) /api/images/?page=page&count=count&name="빈센트 반 고흐"&title="밤의 카페 테라스"
 
 
 2. 검색어가 없는 경우<br>
-/api/image?page=page&count=count
+/api/images/?page=page&count=count
 
 
 * **SUCCESS Response**
 
     * **code**: 200<br>
-    **pagination**: <pre> { current_page: 1, next_url: '/api/image/?page=2&count=입력받은 수'} </pre>
+    **pagination**: <pre> { current_page: 1, next_url: '/api/images/?page=2&count=입력받은 수'} </pre>
     **pagination**: 현재 페이지는 존재하지만 다음 페이지가 없는경우 
                     <pre> { current_page: 1, next_url: null } </pre>
     **content**: 1페이지에 10개 이하의 데이터 전송
@@ -101,7 +101,7 @@ count=[Integer] default = 10 한 페이지에 보여줄 결과의 갯수<br>
 
 ```
   $.ajax({
-    url: "/api/image/?page=1&count=15",
+    url: "/api/images/?page=1&count=15",
     dataType: "json",
     type : "GET",
     success : function(result) {
@@ -110,7 +110,7 @@ count=[Integer] default = 10 한 페이지에 보여줄 결과의 갯수<br>
   });
 
   $.ajax({
-    url: "/api/image/?name="에두아르 마네"&page=2&count=15",
+    url: "/api/images/?name="에두아르 마네"&page=2&count=15",
     dataType: "json",
     type : "GET",
     success : function(result) {
@@ -126,7 +126,7 @@ count=[Integer] default = 10 한 페이지에 보여줄 결과의 갯수<br>
 
 * **URL**
 
-/api/artist/:keyword?page=page&count=count<br>
+/api/artists/:keyword?page=page&count=count<br>
 
 * **Method**
 
@@ -146,16 +146,16 @@ count=[Integer] default is 10, 한 페이지에 보여줄 갯수
     예술가의 출생연도: born=[Integer]<br>
     예술가의 사망연도: death=[Integer]<br>
 
-    ex.) /api/artist/?page=page&count=count&country="영국"&genre="라파엘 전파"
+    ex.) /api/artists/?page=page&count=count&country="영국"&genre="라파엘 전파"
 
 
 2. 검색어가 없는 경우<br>
-/api/artist?page=page&count=count 까지 입력
+/api/artists/?page=page&count=count 까지 입력
 
 * **SUCCESS Response**
 
     * **code**: 200<br>
-    **pagination**: <pre> { current_page: 1, next_url: '/api/artist?page=2&count=입력받은 수'} </pre>
+    **pagination**: <pre> { current_page: 1, next_url: '/api/artists?page=2&count=입력받은 수'} </pre>
     **pagination**: 현재 페이지는 존재하지만 다음 페이지가 없는경우 
                     <pre> { current_page: 1, next_url: null } </pre>
     **content**: 1페이지에 10개 이하의 데이터 전송
@@ -181,7 +181,7 @@ count=[Integer] default is 10, 한 페이지에 보여줄 갯수
 
 ```
   $.ajax({
-    url: "/api/artist?page=1&count=15",
+    url: "/api/artists?page=1&count=15",
     dataType: "json",
     type : "GET",
     success : function(result) {
@@ -190,7 +190,7 @@ count=[Integer] default is 10, 한 페이지에 보여줄 갯수
   });
 
   $.ajax({
-    url: "/api/artist/검색어?page=1&count=15",
+    url: "/api/artists/검색어?page=1&count=15",
     dataType: "json",
     type : "GET",
     success : function(result) {
@@ -206,7 +206,7 @@ count=[Integer] default is 10, 한 페이지에 보여줄 갯수
 
 * **URL**
 
-/api/image/:id<br>
+/api/images/:id<br>
 
 * **Method**
 
@@ -246,7 +246,7 @@ id=[Integer]
 
 ```
   $.ajax({
-    url: "/api/image/100",
+    url: "/api/images/100",
     dataType: "json",
     type : "GET",
     success : function(result) {
@@ -261,7 +261,7 @@ id=[Integer]
 
 * **URL**
 
-/api/artist/:id<br>
+/api/artists/:id<br>
 
 * **Method**
 
@@ -305,7 +305,7 @@ id=[Integer]
 
 ```
   $.ajax({
-    url: "/api/artist/100",
+    url: "/api/artists/100",
     dataType: "json",
     type : "GET",
     success : function(result) {
@@ -325,7 +325,7 @@ id=[Integer]
 
 * **URL**
 
-    /api/image/
+    /api/images/
 
 * **Method**
 
@@ -367,7 +367,7 @@ id=[Integer]
 
 ```
   $.ajax({
-    url: "/api/image/",
+    url: "/api/images/",
     dataType: "json",
     type : "POST",
     data : {
@@ -392,7 +392,7 @@ id=[Integer]
 
 * **URL**
 
-    /api/artist/
+    /api/artists/
 
 * **Method**
 
@@ -433,7 +433,7 @@ death_year=[Integer] <br>
 
 ```
   $.ajax({
-    url: "/api/artist/",
+    url: "/api/artists/",
     dataType: "json",
     type : "POST",
     data : {
@@ -461,7 +461,7 @@ death_year=[Integer] <br>
 
 * **URL**
 
-    /api/image/:id
+    /api/images/:id
 
 * **Method**
 
@@ -501,7 +501,7 @@ death_year=[Integer] <br>
 
 ```
   $.ajax({
-    url: "/api/image/{id}",
+    url: "/api/images/{id}",
     dataType: "json",
     type : "PUT",
     data : {
@@ -529,7 +529,7 @@ death_year=[Integer] <br>
 
 * **URL**
 
-    /api/artist/:id
+    /api/artists/:id
 
 * **Method**
 
@@ -569,7 +569,7 @@ death_year=[Integer] <br>
 
 ```
   $.ajax({
-    url: "/api/artist/{id}",
+    url: "/api/artists/{id}",
     dataType: "json",
     type : "PUT",
     data : {
@@ -593,7 +593,7 @@ death_year=[Integer] <br>
 
 * **URL**
 
-    /api/image/:id
+    /api/images/:id
 
 * **Method**
 
@@ -623,7 +623,7 @@ death_year=[Integer] <br>
 
 ```
   $.ajax({
-    url: "/api/image/{id}",
+    url: "/api/images/{id}",
     dataType: "json",
     type : "DELETE",
     success : function(result) {
@@ -643,7 +643,7 @@ death_year=[Integer] <br>
 
 * **URL**
 
-    /api/artist/:id
+    /api/artists/:id
 
 * **Method**
 
@@ -674,7 +674,7 @@ death_year=[Integer] <br>
 
 ```
   $.ajax({
-    url: "/api/artist/{id}",
+    url: "/api/artists/{id}",
     dataType: "json",
     type : "DELETE",
     success : function(result) {
