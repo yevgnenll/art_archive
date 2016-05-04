@@ -2,16 +2,21 @@ from archive import app
 
 from flask import request, jsonify
 
+import os
+
 
 @app.errorhandler(404)
 def error404(e):
 
     error_message = ""
 
+    images = os.environ.get('IMAGE')
+    artists = os.environ.get('ARTIST')
+
     if request.method == 'PUT' or request.method == 'DELETE':
-        if 'artists' in request.url:
+        if artists in request.url:
             error_message = "Artist is not exist"
-        elif 'images' in request.url:
+        elif images in request.url:
             error_message = "Image is not exist"
     else:
         error_message = "Data doesnt't exist"

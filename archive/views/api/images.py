@@ -75,7 +75,11 @@ def images_detail(id):
 def images_update(id):
 
     params = request.values
-    image = Image.query.filter(Image.id == id).update(params)
+    image = Image.query.filter(Image.id == id)
+
+    if not images.all():
+        abort(404)
+    image.update(params)
 
     Image.query.session.commit()
 
@@ -88,7 +92,12 @@ def images_update(id):
 @app.route('/api/images/<id>', methods=['DELETE'])
 def images_delete(id):
 
-    image = Image.query.filter(Image.id == id).delete()
+    image = Image.query.filter(Image.id == id)
+
+    if not image.all():
+        abort(404)
+
+    image.delete()
 
     Image.query.session.commit()
 
