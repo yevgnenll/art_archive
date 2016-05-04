@@ -1,7 +1,7 @@
 from archive.models import Artist, Image
 
 
-def get_next_url(params):
+def get_params(params):
 
     dict_params = params_to_dict(params)
 

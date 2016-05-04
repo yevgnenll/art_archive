@@ -3,7 +3,7 @@ from sqlalchemy.orm import sessionmaker
 
 from archive import app, db
 from archive.models import Artist, Image
-from archive.utils import pagination_dict, get_next_url, artist_data_filter, params_to_dict
+from archive.utils import pagination_dict, artist_data_filter
 
 
 @app.route('/api/artists/', methods=['GET'])

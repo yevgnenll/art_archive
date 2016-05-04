@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker
 from archive import app
 from archive.models import Artist, Image
 
-from archive.utils import pagination_dict
+from archive.utils import pagination_dict, image_data_filter
 
 
 @app.route('/api/images/', methods=['GET'])
@@ -13,13 +13,7 @@ def images():
     page = request.args.get('page', 1, type=int)
     count = request.args.get('count', 10, type=int)
 
-    title = request.args.get('title', None, type=str)
-    name = request.args.get('name', None, type=str)
-    year = request.args.get('year', None, type=int)
-    description = request.args.get('description', None, type=str)
-
     images = Image.query.join(Artist, Image.artist_id == Artist.id)
-
     images = images.add_columns(
         Artist.name,
         Image.title,
@@ -28,20 +22,7 @@ def images():
         Image.description
     )
 
-    next_url = ""
-
-    if title:
-        images = images.filter(Image.title == title)
-        next_url += "&title=" + title
-    if name:
-        images = images.filter(Artist.name == name)
-        next_url += "&name=" + name
-    if year:
-        images = images.filter(Image.year == year)
-        next_url += "&year=" + year
-    if description:
-        images = images.filter(Image.description == description)
-        next_url += "&description=" + description
+    images = image_data_filter(request.args, images)
 
     start = page * count - count
     list_amount = images.count()
@@ -58,7 +39,7 @@ def images():
     return jsonify(
         content=content,
         code=200,
-        pagination=pagination_dict(page, count, list_amount, next_url),
+        pagination=pagination_dict(request.args, list_amount),
     )
 
 
