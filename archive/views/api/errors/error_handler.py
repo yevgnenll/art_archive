@@ -6,14 +6,15 @@ from flask import request, jsonify
 @app.errorhandler(404)
 def error404(e):
 
-    params = request.args
     error_message = ""
 
-    # page list -> "Data doesn't exist"
-    if request.method == "GET":
+    if request.method == 'PUT' or request.method == 'DELETE':
+        if 'artists' in request.url:
+            error_message = "Artist is not exist"
+        elif 'images' in request.url:
+            error_message = "Image is not exist"
+    else:
         error_message = "Data doesnt't exist"
-
-    # image detail -> o
 
     return jsonify(
         code=404,
