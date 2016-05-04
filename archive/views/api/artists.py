@@ -3,21 +3,16 @@ from sqlalchemy.orm import sessionmaker
 
 from archive import app, db
 from archive.models import Artist, Image
-from archive.utils import pagination_dict, artist_data_filter
+from archive.utils import pagination_dict, artist_data_filter, pagination_for_list
 
 
 @app.route('/api/artists/', methods=['GET'])
 def artist_list():
 
-    page = request.args.get('page', 1, type=int)
-    count = request.args.get('count', 10, type=int)
-
     artists = artist_data_filter(request.args, Artist.query)
-
     list_amout = artists.count()
 
-    start = page * count - count
-    artists = artists.limit(count).offset(start)
+    artists = pagination_for_list(request.args, artists)
 
     content = []
     for artist in artists:
