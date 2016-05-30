@@ -1,7 +1,6 @@
 # art_archive
-tumblbug artist data project
+RESTful API에 대한 이해
 
-## Junior Software Engineer Project #1
 [ref](https://gist.github.com/iros/3426278) see later 
 
 this project is deal with famous artists and their masterpiece data
@@ -91,6 +90,6 @@ pip install -r requirements.txt
 
 commit 전 pep8 체크
 
-"""
+```
 ln config/git/hook/pre-commit .git/hooks/
-"""
+```
